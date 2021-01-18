@@ -2,3 +2,4 @@
 database/password.txt
 database/.vscode/launch.json
 database/.vscode/settings.json
+database/__pycache__/psycopg2_Wrapper.cpython-36.pyc
