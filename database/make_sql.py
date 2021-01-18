@@ -81,14 +81,14 @@ def newPokemon(db):
         for i in range(numMoves):
             moveName = input("enter move name:")
             tm = input("enter tm id:")
-            sql = sql + """INSERT INTO pokemon_db.tm_learned_moves VALUES(%s, '%s', '%s');
+            sql = sql + """INSERT INTO pokemon_db.tm_learned_moves VALUES(%s, '%s', %s);
             """ % (currentID[0], moveName, tm)
 
         numMoves = int(input("How many moves does it learn by TR? "))
         for i in range(numMoves):
             moveName = input("enter move name:")
             tr = input("enter tr id:")
-            sql = sql + """INSERT INTO pokemon_db.tr_learned_moves VALUES(%s, '%s', '%s');
+            sql = sql + """INSERT INTO pokemon_db.tr_learned_moves VALUES(%s, '%s', %s);
             """ % (currentID[0], moveName, tr)
 
         numMoves = int(input("How many moves does it learn by egg moves? "))
