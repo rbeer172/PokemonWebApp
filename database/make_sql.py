@@ -64,11 +64,7 @@ def newPokemon(db):
         """ % (pokedex, name, species, height, weight, growthRate, eggGroup, description,
             hp, attack, defense, specialAttack, specialDefense, speed, total)
 
-        currentID = db.runQuery("SELECT COUNT(*) FROM pokemon_db.pokemon;")
-        if currentID[0] != 0:
-            currentID = db.runQuery("SELECT nextval(pg_get_serial_sequence('pokemon_db.pokemon', 'pokemon_id'));")
-        else:
-            currentID[0] = 1
+        currentID = db.runQuery("SELECT nextval(pg_get_serial_sequence('pokemon_db.pokemon', 'pokemon_id'));")
 
         numMoves = int(input("How many moves does it learn by level up? "))
         for i in range(numMoves):
