@@ -23,11 +23,11 @@ class database:
         conn = self.connectToDatabase()
         cursor = conn.cursor()
         cursor.execute(sql)
-        if cursor.rowcount == 1:
+        if cursor.rowcount == 1 and cursor.description is not None:
             result = cursor.fetchone()
             conn.close()
             return result
-        elif cursor.rowcount > 1:
+        elif cursor.rowcount > 1 and cursor.description is not None:
             result = cursor.fetchall()
             conn.close()
             return result

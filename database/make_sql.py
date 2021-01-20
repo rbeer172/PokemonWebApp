@@ -58,13 +58,26 @@ def newPokemon(db):
         speed = input("enter speed: ")
 
         sql = "--pokemon:" + name + """
-        BEGIN
+        BEGIN;
         INSERT INTO pokemon_db.pokemon VALUES(DEFAULT,%s, '%s', '%s', %s, %s, '%s', '%s', '%s');
         INSERT INTO pokemon_db.pokemon_stats VALUES(%s, %s, %s, %s, %s, %s, %s);
         """ % (pokedex, name, species, height, weight, growthRate, eggGroup, description,
             hp, attack, defense, specialAttack, specialDefense, speed, total)
 
         currentID = db.runQuery("SELECT nextval(pg_get_serial_sequence('pokemon_db.pokemon', 'pokemon_id'));")
+
+        numMoves = int(input("How many types? (1/2): "))
+        for i in range(numMoves):
+            typing = input("enter type:")
+            sql = sql + """INSERT INTO pokemon_db.pokemon_types VALUES(%s, '%s');
+            """ % (currentID[0], typing)
+
+        numMoves = int(input("How many abilities can it learn? "))
+        for i in range(numMoves):
+            moveName = input("enter ability name:")
+            hidden = input("is the ability hidden? (y/n): ")
+            sql = sql + """INSERT INTO pokemon_db.pokemon_abilites VALUES(%s, '%s', %s);
+            """ % (currentID[0], moveName, "TRUE" if hidden == "y" else "FALSE")
 
         numMoves = int(input("How many moves does it learn by level up? "))
         for i in range(numMoves):
@@ -93,13 +106,13 @@ def newPokemon(db):
             sql = sql + """INSERT INTO pokemon_db.egg_moves VALUES(%s, '%s')
             """ % (currentID[0], moveName)
 
-        numMoves = input("does it learn a move on evolution? (y/n): ")
+        numMoves = input("Does it learn a move on evolution? (y/n): ")
         if numMoves == "y":
             moveName = input("enter move name:")
             sql = sql + """INSERT INTO pokemon_db.evolution_learned_moves VALUES(%s, '%s');
             """ % (currentID[0], moveName)
 
-        sql = sql + "COMMIT"
+        sql = sql + "COMMIT;"
         sqlFile = open("pokemon.sql", "a")
         sqlFile.write(re.sub(r'(^[ \t]+|[ \t]+(?=:))', '', sql, flags=re.M))
         sqlFile.close()
@@ -183,6 +196,38 @@ def newEvolution(db):
         if another == "n":
             break
 
+def newTypeEffectiveness(db):
+    while(True):
+        types = db.runQuery("select * from pokemon_db.typing")
+
+        typing = input("enter type: ")
+        sql = "--type:%s\nBEGIN;\n" % (typing)
+        print("enter data for " + typing + " as attacking\n")
+        for i in types:
+            print("\nattacking -> defending")
+            print(typing + "  ->  " + i[0])
+            multiplier = input("enter multiplier: ")
+            sql = sql + """INSERT INTO pokemon_db.type_effectiveness VALUES('%s', '%s', %s);
+            """ % (typing, i[0], multiplier)
+        
+        print("enter data for " + typing + " as defending\n")
+        for i in types:
+            if i[0] != typing:
+                print("\nattacking -> defending")
+                print(i[0] + "  ->  " + typing)
+                multiplier = input("enter multiplier: ")
+                sql = sql + """INSERT INTO pokemon_db.type_effectiveness VALUES('%s', '%s', %s);
+                """ % (i[0], typing, multiplier)
+
+        sql = sql + "COMMIT;\n"
+        sqlFile = open("type_effectiveness.sql", "a")
+        sqlFile.write(re.sub(r'(^[ \t]+|[ \t]+(?=:))', '', sql, flags=re.M))
+        sqlFile.close()
+        db.runQuery(sql)
+
+        another = input("add another? (y/n): ")
+        if another == "n":
+            break
 
 def addToTable(db):
     result = db.runQuery("""
@@ -216,7 +261,7 @@ def addToTable(db):
     for i in range(0, numToEnter):
         insertSQL = "INSERT INTO pokemon_db." + tableName + " VALUES("
         for j in range(0,len(columnNames)):
-            columnSQL = "select data_type from information_schema.columns where column_name = '%s';" % (columnNames[j])
+            columnSQL = "select distinct data_type from information_schema.columns where column_name = '%s';" % (columnNames[j])
             result = db.runQuery(columnSQL)
 
             value = input("enter " + columnNames[j] + ": ")
@@ -237,7 +282,8 @@ def main():
                 1.new move
                 2.new pokemon
                 3.new evolution chain(all pokemon must be added first)
-                4.add to table"""
+                4.new type chart
+                5.add to table"""
     print("Pokmon database sql maker\n" + optionList)
     option = int(input("\nNumber: "))
     db = database()
@@ -248,6 +294,8 @@ def main():
     elif option == 3:
         newEvolution(db)
     elif option == 4:
+        newTypeEffectiveness(db)
+    elif option == 5:
         addToTable(db)
 
 main()

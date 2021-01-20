@@ -49,7 +49,7 @@ CREATE TABLE pokemon_db.typing(typing_name varchar(10) PRIMARY KEY);
 CREATE TABLE pokemon_db.type_effectiveness(
     attacking_type varchar(10) NOT NULL,
     defending_type varchar(10) NOT NULL,
-    multiplier int NOT NULL,
+    multiplier FLOAT NOT NULL,
     CONSTRAINT attacking_type_fk FOREIGN KEY(attacking_type) REFERENCES pokemon_db.typing(typing_name),
     CONSTRAINT defending_type_fk FOREIGN KEY(defending_type) REFERENCES pokemon_db.typing(typing_name)
 );
