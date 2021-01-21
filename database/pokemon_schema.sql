@@ -23,8 +23,8 @@ DROP TABLE IF EXISTS pokemon_db.pokemon_evolution CASCADE;
 DROP TABLE IF EXISTS pokemon_db.power_values CASCADE;
 DROP TABLE IF EXISTS pokemon_db.accuracy_values CASCADE;
 DROP TABLE IF EXISTS pokemon_db.pp_values CASCADE;
-DROP TABLE IF EXISTS pokemon_db.effect_types CASCADE;
-DROP TABLE IF EXISTS pokemon_db.move_effect CASCADE;
+DROP TABLE IF EXISTS pokemon_db.egg_groups CASCADE;
+DROP TABLE IF EXISTS pokemon_db.pokemon_egg_group CASCADE;
 DROP TABLE IF EXISTS pokemon_db.type_categories CASCADE;
 
 CREATE TABLE pokemon_db.power_values(power int PRIMARY KEY);
@@ -40,8 +40,14 @@ CREATE TABLE pokemon_db.pokemon(
     height float NOT NULL,
     weight float NOT NULL,
     growth_rate varchar(10) NOT NULL,
-    egg_group varchar(20) NOT NULL,
-    description text NOT NULL
+    description text NOT NULL,
+    hp int NOT NULL,
+    attack int NOT NULL,
+    defense int NOT NULL,
+    special_attack int NOT NULL,
+    special_defense int NOT NULL,
+    speed int NOT NULL,
+    total int NOT NULL
 );
 
 CREATE TABLE pokemon_db.typing(typing_name varchar(10) PRIMARY KEY);
@@ -75,16 +81,6 @@ CREATE TABLE pokemon_db.moves(
     CONSTRAINT accuracy_fk FOREIGN KEY(accuracy) REFERENCES pokemon_db.accuracy_values(accuracy)
 );
 
-CREATE TABLE pokemon_db.effect_types(effect_name varchar(20) PRIMARY KEY);
-
-CREATE TABLE pokemon_db.move_effect(
-    move_name varchar(20) NOT NULL,
-    effect_name varchar(20) NOT NULL,
-    value int NOT NULL,
-    CONSTRAINT effect_fk FOREIGN KEY(effect_name) REFERENCES pokemon_db.effect_types(effect_name),
-    CONSTRAINT move_name_fk FOREIGN KEY(move_name) REFERENCES pokemon_db.moves(move_name)
-);
-
 CREATE TABLE pokemon_db.tm(
     tm_id int PRIMARY KEY,
     move_name varchar(20) NOT NULL,
@@ -102,23 +98,20 @@ CREATE TABLE pokemon_db.items(
     description text NOT NULL
 );
 
+CREATE TABLE pokemon_db.egg_groups(group_name varchar(12) PRIMARY KEY);
+
+CREATE TABLE pokemon_db.pokemon_egg_group(
+    pokemon_id int NOT NULL,
+    group_name varchar(12) NOT NULL,
+    CONSTRAINT pokemon_id_fk FOREIGN KEY(pokemon_id) REFERENCES pokemon_db.pokemon(pokemon_id),
+    CONSTRAINT group_fk FOREIGN KEY(group_name) REFERENCES pokemon_db.egg_groups(group_name)
+);
+
 CREATE TABLE pokemon_db.pokemon_types(
     pokemon_id int NOT NULL,
     typing varchar(10) NOT NULL,
     CONSTRAINT pokemon_id_fk FOREIGN KEY(pokemon_id) REFERENCES pokemon_db.pokemon(pokemon_id),
     CONSTRAINT typing_fk FOREIGN KEY(typing) REFERENCES pokemon_db.typing(typing_name)
-);
-
-CREATE TABLE pokemon_db.pokemon_stats(
-    pokemon_id int NOT NULL,
-    hp int NOT NULL,
-    attack int NOT NULL,
-    defense int NOT NULL,
-    special_attack int NOT NULL,
-    special_defense int NOT NULL,
-    speed int NOT NULL,
-    total int NOT NULL,
-    CONSTRAINT pokemon_id_fk FOREIGN KEY(pokemon_id) REFERENCES pokemon_db.pokemon(pokemon_id)
 );
 
 CREATE TABLE pokemon_db.pokemon_abilities(

@@ -1,43 +1,6 @@
 import re
 from psycopg2_Wrapper import database
 
-def newMove(db):
-    while(True):
-        moveName = input("\nenter move name: ")
-        moveType = input("enter move type: ")
-        moveCatagory = input("enter catagory: ")
-        movePower = input("enter power: ")
-        moveAccuracy = input("enter accuracy: ")
-        movePP = input("enter PP: ")
-        movePriority = input("enter priority: ")
-        moveDescription = input("enter description: ")
-        optionalEffect = input("does the move have a secondary effect? (y/n): ")
-
-        if optionalEffect == 'n':
-            sql = """INSERT INTO pokemon_db.moves VALUES('%s', '%s', '%s', %s, %s, %s, %s, '%s');
-            """ % (moveName, moveType, moveCatagory, movePower, moveAccuracy, movePP, movePriority, moveDescription)
-        else:
-            effects = db.runQuery("select effect_name from pokemon_db.effect_types;")
-            for i in range(0, len(effects)):
-                print(i + "." + effects[i])
-            index = input("\nenter effect type (number):")
-            chance = input("\nenter percent chance effect can occur:")
-            sql = """BEGIN
-                INSERT INTO pokemon_db.moves VALUES('%s', '%s', '%s', %s, %s, %s, %s, '%s');
-                INSERT INTO pokemon_db.move_effect VALUES('%s', '%s', %s)
-                COMMIT
-            """ % (moveName, moveType, moveCatagory, movePower, moveAccuracy, movePP, movePriority, moveDescription,
-                    moveName, effects[index], chance)
-
-        moveFile = open("moves.sql", "a")
-        moveFile.write(sql + "\n")
-        moveFile.close()
-        db.runQuery(sql)
-
-        another = input("add another? (y/n): ")
-        if another == "n":
-            break
-
 def newPokemon(db):
     while(True):
         pokedex = input("\nenter pokedex number: ")  
@@ -59,14 +22,14 @@ def newPokemon(db):
 
         sql = "--pokemon:" + name + """
         BEGIN;
-        INSERT INTO pokemon_db.pokemon VALUES(DEFAULT,%s, '%s', '%s', %s, %s, '%s', '%s', '%s');
-        INSERT INTO pokemon_db.pokemon_stats VALUES(%s, %s, %s, %s, %s, %s, %s);
-        """ % (pokedex, name, species, height, weight, growthRate, eggGroup, description,
-            hp, attack, defense, specialAttack, specialDefense, speed, total)
+        INSERT INTO pokemon_db.pokemon 
+        VALUES(DEFAULT,%s, '%s', '%s', %s, %s, '%s', '%s', '%s', %s, %s, %s, %s, %s, %s, %s);
+        """ % (pokedex, name, species, height, weight, growthRate, eggGroup, description, 
+                hp, attack, defense, specialAttack, specialDefense, speed, total)
 
         currentID = db.runQuery("SELECT nextval(pg_get_serial_sequence('pokemon_db.pokemon', 'pokemon_id'));")
 
-        numMoves = int(input("How many types? (1/2): "))
+        numMoves = int(input("How many types? (1 or 2): "))
         for i in range(numMoves):
             typing = input("enter type:")
             sql = sql + """INSERT INTO pokemon_db.pokemon_types VALUES(%s, '%s');
@@ -74,43 +37,49 @@ def newPokemon(db):
 
         numMoves = int(input("How many abilities can it learn? "))
         for i in range(numMoves):
-            moveName = input("enter ability name:")
+            name = input("enter ability name:")
             hidden = input("is the ability hidden? (y/n): ")
             sql = sql + """INSERT INTO pokemon_db.pokemon_abilites VALUES(%s, '%s', %s);
-            """ % (currentID[0], moveName, "TRUE" if hidden == "y" else "FALSE")
+            """ % (currentID[0], name, "TRUE" if hidden == "y" else "FALSE")
+        
+        numMoves = int(input("How many egg groups is it in? (1 or 2): "))
+        for i in range(numMoves):
+            name = input("enter group name:")
+            sql = sql + """INSERT INTO pokemon_db.pokemon_egg_group VALUES(%s, '%s');
+            """ % (currentID[0], name)
 
         numMoves = int(input("How many moves does it learn by level up? "))
         for i in range(numMoves):
-            moveName = input("enter move name:")
+            name = input("enter move name:")
             moveLevel = input("enter move level:")
             sql = sql + """INSERT INTO pokemon_db.levelup_learned_moves VALUES(%s, '%s', %s);
-            """ % (currentID[0], moveName, moveLevel)
+            """ % (currentID[0], name, moveLevel)
 
         numMoves = int(input("How many moves does it learn by TM? "))
         for i in range(numMoves):
-            moveName = input("enter move name:")
+            name = input("enter move name:")
             tm = input("enter tm id:")
             sql = sql + """INSERT INTO pokemon_db.tm_learned_moves VALUES(%s, '%s', %s);
-            """ % (currentID[0], moveName, tm)
+            """ % (currentID[0], name, tm)
 
         numMoves = int(input("How many moves does it learn by TR? "))
         for i in range(numMoves):
-            moveName = input("enter move name:")
+            name = input("enter move name:")
             tr = input("enter tr id:")
             sql = sql + """INSERT INTO pokemon_db.tr_learned_moves VALUES(%s, '%s', %s);
-            """ % (currentID[0], moveName, tr)
+            """ % (currentID[0], name, tr)
 
         numMoves = int(input("How many moves does it learn by egg moves? "))
         for i in range(numMoves):
-            moveName = input("enter move name:")
+            name = input("enter move name:")
             sql = sql + """INSERT INTO pokemon_db.egg_moves VALUES(%s, '%s')
-            """ % (currentID[0], moveName)
+            """ % (currentID[0], name)
 
         numMoves = input("Does it learn a move on evolution? (y/n): ")
         if numMoves == "y":
-            moveName = input("enter move name:")
+            name = input("enter move name:")
             sql = sql + """INSERT INTO pokemon_db.evolution_learned_moves VALUES(%s, '%s');
-            """ % (currentID[0], moveName)
+            """ % (currentID[0], name)
 
         sql = sql + "COMMIT;"
         sqlFile = open("pokemon.sql", "a")
@@ -196,38 +165,34 @@ def newEvolution(db):
         if another == "n":
             break
 
-def newTypeEffectiveness(db):
-    while(True):
-        types = db.runQuery("select * from pokemon_db.typing")
-
-        typing = input("enter type: ")
-        sql = "--type:%s\nBEGIN;\n" % (typing)
-        print("enter data for " + typing + " as attacking\n")
-        for i in types:
+def fillTypeEffectiveness(db):
+    types = db.runQuery("select * from pokemon_db.typing")
+    queue = types
+    for typing in types:
+        sql = "--type:%s\nBEGIN;\n" % (typing[0])
+        print("\nenter data for " + typing[0] + " as attacking\n")
+        for i in queue:
             print("\nattacking -> defending")
-            print(typing + "  ->  " + i[0])
+            print(typing[0] + "  ->  " + i[0])
             multiplier = input("enter multiplier: ")
             sql = sql + """INSERT INTO pokemon_db.type_effectiveness VALUES('%s', '%s', %s);
-            """ % (typing, i[0], multiplier)
+            """ % (typing[0], i[0], multiplier)
         
-        print("enter data for " + typing + " as defending\n")
-        for i in types:
-            if i[0] != typing:
+        print("\nenter data for " + typing[0] + " as defending\n")
+        for i in queue:
+            if i[0] != typing[0]:
                 print("\nattacking -> defending")
-                print(i[0] + "  ->  " + typing)
+                print(i[0] + "  ->  " + typing[0])
                 multiplier = input("enter multiplier: ")
                 sql = sql + """INSERT INTO pokemon_db.type_effectiveness VALUES('%s', '%s', %s);
-                """ % (i[0], typing, multiplier)
+                """ % (i[0], typing[0], multiplier)
 
         sql = sql + "COMMIT;\n"
         sqlFile = open("type_effectiveness.sql", "a")
         sqlFile.write(re.sub(r'(^[ \t]+|[ \t]+(?=:))', '', sql, flags=re.M))
         sqlFile.close()
         db.runQuery(sql)
-
-        another = input("add another? (y/n): ")
-        if another == "n":
-            break
+        queue.pop(0)
 
 def addToTable(db):
     result = db.runQuery("""
@@ -240,8 +205,8 @@ def addToTable(db):
             'pokemon_evolution',
             'pokemon_stats',
             'pokemon_types',
+            'pokemon_egg_group',
             'moves',
-            'move_effect',
             'egg_moves',
             'evolution_group',
             'evolution_learned_moves',
@@ -279,23 +244,20 @@ def addToTable(db):
 
 def main():
     optionList = """\nselect an option\n
-                1.new move
-                2.new pokemon
-                3.new evolution chain(all pokemon must be added first)
-                4.new type chart
-                5.add to table"""
+                1.new pokemon
+                2.new evolution chain(all pokemon must be added first)
+                3.new type chart
+                4.add to table"""
     print("Pokmon database sql maker\n" + optionList)
     option = int(input("\nNumber: "))
     db = database()
     if option == 1:
-        newMove(db)
-    elif option == 2:
         newPokemon(db)
-    elif option == 3:
+    elif option == 2:
         newEvolution(db)
+    elif option == 3:
+        fillTypeEffectiveness(db)
     elif option == 4:
-        newTypeEffectiveness(db)
-    elif option == 5:
         addToTable(db)
 
 main()
