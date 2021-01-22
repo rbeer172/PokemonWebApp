@@ -39,15 +39,15 @@ CREATE TABLE pokemon_db.pokemon(
     species varchar(20) NOT NULL,
     height float NOT NULL,
     weight float NOT NULL,
-    growth_rate varchar(10) NOT NULL,
-    description text NOT NULL,
+    growth_rate varchar(20) NOT NULL,
     hp int NOT NULL,
     attack int NOT NULL,
     defense int NOT NULL,
     special_attack int NOT NULL,
     special_defense int NOT NULL,
     speed int NOT NULL,
-    total int NOT NULL
+    total int NOT NULL,
+    description text NOT NULL
 );
 
 CREATE TABLE pokemon_db.typing(typing_name varchar(10) PRIMARY KEY);

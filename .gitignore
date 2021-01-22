@@ -10,3 +10,8 @@ database/pp_values.sql
 database/power_values.sql
 database/accuracy_values.sql
 database/abilities.sql
+database/egg_groups.sql
+database/moves.sql
+database/pokemon.sql
+database/tm.sql
+database/tr.sql
