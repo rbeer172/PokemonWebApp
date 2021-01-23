@@ -19,16 +19,17 @@ def newPokemon(db):
         specialDefense = input("enter special Defense: ")
         speed = input("enter speed: ")
 
-        sql = "--pokemon:" + name + """
-        BEGIN;
-        INSERT INTO pokemon_db.pokemon VALUES(DEFAULT, %s, '%s', '%s', %s, %s, '%s', %s, %s, %s, %s, %s, %s, %s,\n'%s');
-        """ % (pokedex, name, species, height, weight, growthRate, hp, attack, defense, specialAttack, specialDefense, speed, total, description)
-
         try:
-            currentID = db.runQuery("select currval(pg_get_serial_sequence('pokemon_db.pokemon', 'pokemon_id')) + 1")
+            currentID = db.runQuery("select nextval(pg_get_serial_sequence('pokemon_db.pokemon', 'pokemon_id'));")
         except Exception:
             currentID = [1]
             pass
+
+        sql = "--pokemon:" + name + """
+        BEGIN;
+        INSERT INTO pokemon_db.pokemon VALUES(%s, %s, '%s', '%s', %s, %s, '%s', %s, %s, %s, %s, %s, %s, %s,\n'%s');
+        """ % (currentID[0], pokedex, name, species, height, weight, growthRate, 
+                hp, attack, defense, specialAttack, specialDefense, speed, total, description)
 
         numMoves = int(input("How many types? (1 or 2): "))
         for i in range(numMoves):
@@ -58,17 +59,15 @@ def newPokemon(db):
 
         numMoves = int(input("How many moves does it learn by TM? "))
         for i in range(numMoves):
-            name = input("enter move name:")
             tm = input("enter tm id:")
-            sql = sql + """INSERT INTO pokemon_db.tm_learned_moves VALUES(%s, '%s', %s);
-            """ % (currentID[0], name, tm)
+            sql = sql + """INSERT INTO pokemon_db.tm_learned_moves VALUES(%s, %s);
+            """ % (currentID[0], tm)
 
         numMoves = int(input("How many moves does it learn by TR? "))
         for i in range(numMoves):
-            name = input("enter move name:")
             tr = input("enter tr id:")
-            sql = sql + """INSERT INTO pokemon_db.tr_learned_moves VALUES(%s, '%s', %s);
-            """ % (currentID[0], name, tr)
+            sql = sql + """INSERT INTO pokemon_db.tr_learned_moves VALUES(%s, %s);
+            """ % (currentID[0], tr)
 
         numMoves = int(input("How many moves does it learn by egg moves? "))
         for i in range(numMoves):
@@ -82,7 +81,7 @@ def newPokemon(db):
             sql = sql + """INSERT INTO pokemon_db.evolution_learned_moves VALUES(%s, '%s');
             """ % (currentID[0], name)
 
-        sql = sql + "COMMIT\n;"
+        sql = sql + "COMMIT;\n\n"
         sqlFile = open("pokemon.sql", "a")
         sqlFile.write(re.sub(r'(^[ \t]+|[ \t]+(?=:))', '', sql, flags=re.M))
         sqlFile.close()

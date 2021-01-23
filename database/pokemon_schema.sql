@@ -146,19 +146,15 @@ CREATE TABLE pokemon_db.egg_moves(
 
 CREATE TABLE pokemon_db.tr_learned_moves(
     pokemon_id int NOT NULL,
-    move_name varchar(20) NOT NULL,
     tr_id int NOT NULL,
     CONSTRAINT pokemon_id_fk FOREIGN KEY(pokemon_id) REFERENCES pokemon_db.pokemon(pokemon_id),
-    CONSTRAINT move_name_fk FOREIGN KEY(move_name) REFERENCES pokemon_db.moves(move_name),
     CONSTRAINT tr_id_fk FOREIGN KEY(tr_id) REFERENCES pokemon_db.tr(tr_id)
 );
 
 CREATE TABLE pokemon_db.tm_learned_moves(
     pokemon_id int NOT NULL,
-    move_name varchar(20) NOT NULL,
     tm_id int NOT NULL,
     CONSTRAINT pokemon_id_fk FOREIGN KEY(pokemon_id) REFERENCES pokemon_db.pokemon(pokemon_id),
-    CONSTRAINT move_name_fk FOREIGN KEY(move_name) REFERENCES pokemon_db.moves(move_name),
     CONSTRAINT tm_id_fk FOREIGN KEY(tm_id) REFERENCES pokemon_db.tm(tm_id)
 );
 
