@@ -163,7 +163,7 @@ CREATE TABLE pokemon_db.evolution_group(group_id serial PRIMARY KEY);
 CREATE TABLE pokemon_db.pokemon_evolution(
     pokemon_id int NOT NULL,
     evolution_id int NOT NULL,
-    evolution_order int NOT NULL,
+    evolved_pokemon int NOT NULL,
     level int,
     held_item VARCHAR(20),
     use_item VARCHAR(20),
@@ -173,6 +173,7 @@ CREATE TABLE pokemon_db.pokemon_evolution(
     trade bool NOT NULL,
     other text,
     CONSTRAINT pokemon_id_fk FOREIGN KEY(pokemon_id) REFERENCES pokemon_db.pokemon(pokemon_id),
+    CONSTRAINT evolved_pokemon_fk FOREIGN KEY(evolved_pokemon) REFERENCES pokemon_db.pokemon(pokemon_id),
     CONSTRAINT evolution_id_fk FOREIGN KEY(evolution_id) REFERENCES pokemon_db.evolution_group(group_id),
     CONSTRAINT held_item_fk FOREIGN KEY(held_item) REFERENCES pokemon_db.items(item_name),
     CONSTRAINT use_item_fk FOREIGN KEY(use_item) REFERENCES pokemon_db.items(item_name),

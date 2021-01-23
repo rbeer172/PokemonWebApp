@@ -93,69 +93,72 @@ def newPokemon(db):
 
 def newEvolution(db):
     while(True):
-        chainNum = int(input("enter number of pokemon in chain: "))
-        sql = "BEGIN\nINSERT INTO pokemon_db.evolution_group VALUES(DEFAULT);\n"
+        groupID = db.runQuery("select nextval(pg_get_serial_sequence('pokemon_db.evolution_group', 'group_id'));")
+        chainNum = int(input("enter number of evolutions in chain: "))
+        sql = "BEGIN;\nINSERT INTO pokemon_db.evolution_group VALUES(%s);\n" %(groupID[0])
 
         for i in range(0,chainNum):
             pokemonName = input("enter pokemon name:")
-            order = input("enter the pokemon's position in the chain(number): ")
-            pokemonID = db.runQuery("select pokemon_id from pokemon_db.pokemon where pokemon_name = " + pokemonName)
-            nextID = db.runQuery("SELECT nextval(pg_get_serial_sequence('pokemon_db.evolution_group', 'group_id'));")
+            evolvedPokemon = input("enter the pokemon it evolves into: ")
+            pokemonID = db.runQuery("select pokemon_id from pokemon_db.pokemon where pokemon_name = '" + pokemonName + "'")
+            evolvedID = db.runQuery("select pokemon_id from pokemon_db.pokemon where pokemon_name = '" + evolvedPokemon + "'")
 
             print("\t\n1.level-up\n2.item\n3.friendship\n4.trade\n5.other\n")
             evolutionType = int(input("select a evolution option(number): "))
             if evolutionType == 1:
                 level = input("enter level: ")
                 sql = sql + """INSERT INTO pokemon_db.pokemon_evolution 
-                VALUES(%s, %s, %s, %s, NULL, NULL, NULL, FALSE, NULL ,FALSE, NULL)
-                """ % (pokemonID[0], nextID[0], order, level)
+                VALUES(%s, %s, %s, %s, NULL, NULL, NULL, FALSE, NULL ,FALSE, NULL);
+                """ % (pokemonID[0], groupID[0], evolvedID[0], level)
 
             elif evolutionType == 2:
                 item = input("enter item name: ")
                 sql = sql + """INSERT INTO pokemon_db.pokemon_evolution 
-                VALUES(%s, %s, %s, NULL, %s, NULL, NULL, FALSE, NULL ,FALSE, NULL)
-                """ % (pokemonID[0], nextID[0], order, item)
+                VALUES(%s, %s, %s, NULL, %s, NULL, NULL, FALSE, NULL ,FALSE, NULL);
+                """ % (pokemonID[0], groupID[0], evolvedID[0], item)
                 
             elif evolutionType == 3:
                 option = input("Does the evolution happen at certain time of day? (y/n): ")
                 if option == "y":
                     time = input("enter daytime or nighttime: ")
                     sql = sql + """INSERT INTO pokemon_db.pokemon_evolution 
-                VALUES(%s, %s, %s, NULL, NULL, NULL, '%s', TRUE, NULL ,FALSE, NULL)
-                """ % (pokemonID[0], nextID[0], order, time)
+                VALUES(%s, %s, %s, NULL, NULL, NULL, '%s', TRUE, NULL ,FALSE, NULL);
+                """ % (pokemonID[0], groupID[0], evolvedID[0], time)
                 else:
                     sql = sql + """INSERT INTO pokemon_db.pokemon_evolution 
-                VALUES(%s, %s, %s, NULL, NULL, NULL, NULL, TRUE, NULL ,FALSE, NULL)
-                """ % (pokemonID[0], nextID[0], order)
+                VALUES(%s, %s, %s, NULL, NULL, NULL, NULL, TRUE, NULL ,FALSE, NULL);
+                """ % (pokemonID[0], groupID[0], evolvedID[0])
 
             elif evolutionType == 4:
                 option = input("Does the pokemon need a held item? (y/n): ")
                 if option == "y":
                     item = input("enter item name: ")
                     sql = sql + """INSERT INTO pokemon_db.pokemon_evolution 
-                VALUES(%s, %s, %s, NULL, '%s', NULL, NULL, FALSE, NULL ,TRUE, NULL)
-                """ % (pokemonID[0], nextID[0], order, item)
+                VALUES(%s, %s, %s, NULL, '%s', NULL, NULL, FALSE, NULL ,TRUE, NULL);
+                """ % (pokemonID[0], groupID[0], evolvedID[0], item)
                 else:
                     sql = sql + """INSERT INTO pokemon_db.pokemon_evolution 
-                VALUES(%s, %s, %s, NULL, NULL, NULL, NULL, FALSE, NULL ,TRUE, NULL)
-                """ % (pokemonID[0], nextID[0], order)
+                VALUES(%s, %s, %s, NULL, NULL, NULL, NULL, FALSE, NULL ,TRUE, NULL);
+                """ % (pokemonID[0], groupID[0], evolvedID[0])
 
             elif evolutionType == 5:
                 columnNames = db.getColumnNames("pokemon_db.pokemon_evolution")
                 for j in range(0,len(columnNames)):
-                    insertQuery = "INSERT INTO pokemon_db.pokemon_evolution VALUES("
-                    columnTypes = "select data_type from information_schema.columns where column_name = '%s';" % (columnNames[j])
-                    result = db.runQuery(columnTypes)
+                    if columnNames[j] != "pokemon_id" and columnNames[j] != "evolution_id" and columnNames[j] != "evolved_pokemon":
+                        insertQuery = "INSERT INTO pokemon_db.pokemon_evolution VALUES(%s, %s, '%s'"  % (pokemonID[0], groupID[0], evolvedPokemon)
+                        columnTypes = "select data_type from information_schema.columns where column_name = '%s';" % (columnNames[j])
+                        result = db.runQuery(columnTypes)
 
-                    value = input("enter " + columnNames[j] + "(enter NULL if not applicable): ")
-                    if result[0] == "integer" or value == "NULL":
-                        insertQuery = insertQuery + value
-                    else:
-                        insertQuery = insertQuery + "'" + value + "'"
-                    if j != len(columnNames) - 1:
-                        insertQuery = insertQuery + ","
+                        value = input("enter " + columnNames[j] + "(enter NULL if not applicable): ")
+                        if result[0] == "integer" or value == "NULL":
+                            insertQuery = insertQuery + value
+                        else:
+                            insertQuery = insertQuery + "'" + value + "'"
+                        if j != len(columnNames) - 1:
+                            insertQuery = insertQuery + ","
                 sql = sql + insertQuery + ");"
 
+        sql = sql + "COMMIT;\n\n"
         file = open("evolution.sql", "a")
         file.write(re.sub(r'(^[ \t]+|[ \t]+(?=:))', '', sql, flags=re.M))
         file.close()
