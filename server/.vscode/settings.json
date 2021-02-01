@@ -1,0 +1,106 @@
+{
+    "workbench.sideBar.location": "left",
+    "workbench.activityBar.visible": true,
+    "window.menuBarVisibility": "default",
+    "editor.minimap.enabled": true,
+    "breadcrumbs.enabled": true,
+    "editor.tokenColorCustomizations": {
+        "keywords": "#b342ffe7",
+        "comments": "#ff7300e5",
+        "strings": "#1eff00af",
+        "variables": "#ffffffb6",
+        "numbers": "#ffffffb6",
+        "functions": "#f2ff35b7", //python
+        "types": "#0084ffe5",
+        "textMateRules": [
+            {
+                "scope": "keyword.operator",
+                "settings": {
+                    "foreground": "#ff3535cb"
+                }
+            },
+            {
+                "scope": "punctuation",
+                "settings": {
+                    "foreground": "#ff3535cb"
+                }
+            },
+            {
+                "scope": "constant.language", 
+                "settings": {
+                    "foreground": "#b342ff"
+                }
+            },
+            {
+                "scope": "meta.function.php", //c++
+                "settings": {
+                    "foreground": "#ff3535d8"
+                }
+            },
+            {
+                "scope": "support", // c++ linux
+                "settings": {
+                    "foreground": "#f2ff35b7"
+                }
+            },
+            {
+                "scope": "keyword",
+                "settings": {
+                    "foreground": "#b342ffe5"
+                }
+            },
+            {
+                "scope": "variable.other.constant", //c++ linux
+                "settings": {
+                    "foreground": "#ffffffb6"
+                }
+            },
+            {
+                "scope": "variable.other.object", // c++ linux
+                "settings": {
+                    "foreground": "#0084ffe5"
+                }
+            },
+            {
+                "scope": "punctuation.definition.string.begin",
+                "settings": {
+                    "foreground": "#1eff00af"
+                }
+            },
+            {
+                "scope": "punctuation.definition.string.end",
+                "settings": {
+                    "foreground": "#1eff00af"
+                }
+            },
+            {
+                "scope": "storage.modifier", // c++ linux
+                "settings": {
+                    "foreground": "#b342ffe5"
+                }
+            }
+        ]
+    },
+    "workbench.colorTheme": "Visual Studio Dark",
+    "csharp.referencesCodeLens.enabled": false,
+    "python.autoComplete.addBrackets": true,
+    "python.jediEnabled": false,
+    "window.zoomLevel": 0,
+    "python.languageServer": "Microsoft",
+    "editor.suggestSelection": "first",
+    "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue",
+    "java.home": "C:\\jdk-14.0.2",
+    "files.exclude": {
+        "**/.classpath": true,
+        "**/.project": true,
+        "**/.settings": true,
+        "**/.factorypath": true
+    },
+    "vsintellicode.typescript.completionsEnabled": false,
+    "vsintellicode.sql.completionsEnabled": false,
+    "java.debug.settings.forceBuildBeforeLaunch": false,
+    "java.project.importHint": false,
+    "git.confirmSync": false,
+    "editor.tabSize": 4,
+    "editor.detectIndentation": false
+}
