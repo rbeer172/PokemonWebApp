@@ -9,6 +9,7 @@ namespace server.DataAccess.entities
         [Key]
         public int id { get; set; }
 
+        [Required]
         public string move_name { get; set; }
         [ForeignKey(nameof(move_name))]
         public moves move { get; set; }

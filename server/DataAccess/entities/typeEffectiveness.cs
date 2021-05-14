@@ -6,15 +6,19 @@ namespace server.DataAccess.entities
     [Table("type_effectiveness")]
     public class typeEffectiveness
     {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int id { get; set; }
+
+        [Required]
         public string attacking_type { get; set; }
+        [Required]
         public string defending_type { get; set; }
 
-        [ForeignKey(nameof(attacking_type))]
         public typing attack { get; set; }
-
-        [ForeignKey(nameof(defending_type))]
         public typing defend { get; set; }
 
+        [Required]
         public float multiplier { get; set; }
     }
 }

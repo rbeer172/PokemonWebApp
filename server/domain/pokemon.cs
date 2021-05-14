@@ -1,40 +1,34 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
-namespace server.DataAccess.entities
+namespace server.domain
 {
-    [Table("pokemon")]
-    public class pokemonEntity
+    public class pokemon
     {
-        [Key]
         public int pokemon_id { get; set; }
-        [Required]
         public int pokdex_id { get; set; }
-        [Required]
         public string pokemon_name { get; set; }
-        [Required]
         public string species { get; set; }
-        [Required]
         public float height { get; set; }
-        [Required]
         public float weight { get; set; }
-        [Required]
         public string growth_rate { get; set; }
-        [Required]
         public int hp { get; set; }
-        [Required]
         public int attack { get; set; }
-        [Required]
         public int defense { get; set; }
-        [Required]
         public int special_attack { get; set; }
-        [Required]
         public int special_defense { get; set; }
-        [Required]
         public int speed { get; set; }
-        [Required]
         public int total { get; set; }
-        [Required]
         public string description { get; set; }
+        public List<string> type { get; set; }
+        public List<string> abilities { get; set; }
+        public List<string> eggGroups { get; set; }
+        public List<string> levelUpMoves { get; set; }
+        public List<string> evolutionMoves { get; set; }
+        public List<string> eggMoves { get; set; }
+        public List<int> tmMoves { get; set; }
+        public List<int> trMoves { get; set; }
     }
 }

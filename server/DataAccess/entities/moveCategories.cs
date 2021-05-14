@@ -3,8 +3,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace server.DataAccess.entities
 {
-    [Table("type_categories")]
-    public class typeCategories
+    [Table("move_categories")]
+    public class moveCategories
     {
         [Key]
         public string category { get; set; }

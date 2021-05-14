@@ -9,13 +9,15 @@ namespace server.DataAccess.entities
         [Key]
         public string name { get; set; }
 
+        [Required]
         public string typing_name { get; set; }
         [ForeignKey(nameof(typing_name))]
         public typing move_typing { get; set; }
 
+        [Required]
         public string category { get; set; }
         [ForeignKey(nameof(category))]
-        public typeCategories move_category { get; set; }
+        public moveCategories move_category { get; set; }
 
         public int power { get; set; }
         [ForeignKey(nameof(power))]
@@ -29,7 +31,9 @@ namespace server.DataAccess.entities
         [ForeignKey(nameof(pp))]
         public ppValues move_pp { get; set; }
 
+        [Required]
         public int priority { get; set; }
+        [Required]
         public string description { get; set; }
     }
 }

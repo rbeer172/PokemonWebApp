@@ -6,19 +6,21 @@ namespace server.DataAccess.entities
     [Table("evolution")]
     public class evolution
     {
-        public string pokemon_id { get; set; }
-        [ForeignKey(nameof(pokemon_id))]
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int id { get; set; }
+
+        public int pokemon_id { get; set; }
         public pokemonEntity pokemon { get; set; }
 
-        public string evolution_id { get; set; }
+        public int evolution_id { get; set; }
         [ForeignKey(nameof(evolution_id))]
         public evolutionGroup pokemon_evolution { get; set; }
 
-        public string evolved_pokemon { get; set; }
-        [ForeignKey(nameof(evolved_pokemon))]
+        public int evolved_pokemon { get; set; }
         public pokemonEntity pokemonEvolved { get; set; }
 
-        public int level { get; set; }
+        public int? level { get; set; }
 
         public string held_item { get; set; }
         [ForeignKey(nameof(held_item))]
@@ -33,7 +35,7 @@ namespace server.DataAccess.entities
 
         public string move { get; set; }
         [ForeignKey(nameof(move))]
-        public tm pokemon_move { get; set; }
+        public moves pokemon_move { get; set; }
 
         public bool trade { get; set; }
         public string other { get; set; }

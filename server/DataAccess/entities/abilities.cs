@@ -8,6 +8,7 @@ namespace server.DataAccess.entities
     {
         [Key]
         public string ability_name { get; set; }
+        [Required]
         public string description { get; set; }
     }
 }
