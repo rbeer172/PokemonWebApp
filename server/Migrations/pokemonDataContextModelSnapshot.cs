@@ -28,7 +28,12 @@ namespace server.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("pokemonEntitypokemon_id")
+                        .HasColumnType("int");
+
                     b.HasKey("ability_name");
+
+                    b.HasIndex("pokemonEntitypokemon_id");
 
                     b.ToTable("abilities");
                 });
@@ -50,7 +55,12 @@ namespace server.Migrations
                     b.Property<string>("name")
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<int?>("pokemonEntitypokemon_id")
+                        .HasColumnType("int");
+
                     b.HasKey("name");
+
+                    b.HasIndex("pokemonEntitypokemon_id");
 
                     b.ToTable("egg_groups");
                 });
@@ -534,9 +544,28 @@ namespace server.Migrations
                     b.Property<string>("typing_name")
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<int?>("pokemonEntitypokemon_id")
+                        .HasColumnType("int");
+
                     b.HasKey("typing_name");
 
+                    b.HasIndex("pokemonEntitypokemon_id");
+
                     b.ToTable("typing");
+                });
+
+            modelBuilder.Entity("server.DataAccess.entities.abilities", b =>
+                {
+                    b.HasOne("server.DataAccess.entities.pokemonEntity", null)
+                        .WithMany("abilities")
+                        .HasForeignKey("pokemonEntitypokemon_id");
+                });
+
+            modelBuilder.Entity("server.DataAccess.entities.eggGroups", b =>
+                {
+                    b.HasOne("server.DataAccess.entities.pokemonEntity", null)
+                        .WithMany("eggGroups")
+                        .HasForeignKey("pokemonEntitypokemon_id");
                 });
 
             modelBuilder.Entity("server.DataAccess.entities.eggMoves", b =>
@@ -548,7 +577,7 @@ namespace server.Migrations
                         .IsRequired();
 
                     b.HasOne("server.DataAccess.entities.pokemonEntity", "pokemon")
-                        .WithMany()
+                        .WithMany("eggMoves")
                         .HasForeignKey("pokemon_id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -612,7 +641,7 @@ namespace server.Migrations
                         .IsRequired();
 
                     b.HasOne("server.DataAccess.entities.pokemonEntity", "pokemon")
-                        .WithMany()
+                        .WithMany("evolutionMoves")
                         .HasForeignKey("pokemon_id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -631,7 +660,7 @@ namespace server.Migrations
                         .IsRequired();
 
                     b.HasOne("server.DataAccess.entities.pokemonEntity", "pokemon")
-                        .WithMany()
+                        .WithMany("levelUpMoves")
                         .HasForeignKey("pokemon_id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -755,7 +784,7 @@ namespace server.Migrations
             modelBuilder.Entity("server.DataAccess.entities.tmLearnedMoves", b =>
                 {
                     b.HasOne("server.DataAccess.entities.pokemonEntity", "pokemon")
-                        .WithMany()
+                        .WithMany("tmMoves")
                         .HasForeignKey("pokemon_id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -785,7 +814,7 @@ namespace server.Migrations
             modelBuilder.Entity("server.DataAccess.entities.trLearnedMoves", b =>
                 {
                     b.HasOne("server.DataAccess.entities.pokemonEntity", "pokemon")
-                        .WithMany()
+                        .WithMany("trMoves")
                         .HasForeignKey("pokemon_id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -818,6 +847,32 @@ namespace server.Migrations
                     b.Navigation("attack");
 
                     b.Navigation("defend");
+                });
+
+            modelBuilder.Entity("server.DataAccess.entities.typing", b =>
+                {
+                    b.HasOne("server.DataAccess.entities.pokemonEntity", null)
+                        .WithMany("type")
+                        .HasForeignKey("pokemonEntitypokemon_id");
+                });
+
+            modelBuilder.Entity("server.DataAccess.entities.pokemonEntity", b =>
+                {
+                    b.Navigation("abilities");
+
+                    b.Navigation("eggGroups");
+
+                    b.Navigation("eggMoves");
+
+                    b.Navigation("evolutionMoves");
+
+                    b.Navigation("levelUpMoves");
+
+                    b.Navigation("tmMoves");
+
+                    b.Navigation("trMoves");
+
+                    b.Navigation("type");
                 });
 #pragma warning restore 612, 618
         }

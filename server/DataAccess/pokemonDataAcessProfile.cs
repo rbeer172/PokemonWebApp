@@ -12,48 +12,16 @@ namespace server.DataAccess
     {
         public pokemonDataAcessProfile()
         {
-            CreateMap<pokemonEntity, string>().ConvertUsing(a => a.pokemon_name);
+            CreateMap<pokemonTypes, string>().ConvertUsing(a => a.type);
+            CreateMap<pokemonAbilties, string>().ConvertUsing(a => a.ability);
+            CreateMap<pokemonEggGroups, string>().ConvertUsing(a => a.eggGroup);
+            CreateMap<eggMoves, string>().ConvertUsing(a => a.move);
+            CreateMap<evolutionLearnedMoves, string>().ConvertUsing(a => a.move);
+            CreateMap<levelupLearnedMoves, string>().ConvertUsing(a => a.move);
+            CreateMap<tmLearnedMoves, int>().ConvertUsing(a => a.tm_id);
+            CreateMap<trLearnedMoves, int>().ConvertUsing(a => a.tr_id);
 
-            CreateMap<pokemon, typing>()
-                .ForMember(
-                    dest => dest.typing_name, 
-                    opt => opt.MapFrom(src => src.type)
-                );
-            CreateMap<pokemon, abilities>()
-                .ForMember(
-                    dest => dest.ability_name,
-                    opt => opt.MapFrom(src => src.abilities)
-                );
-            CreateMap<pokemon, eggGroups>()
-                .ForMember(
-                    dest => dest.name,
-                    opt => opt.MapFrom(src => src.eggGroups)
-                );
-            CreateMap<pokemon, levelupLearnedMoves>()
-                .ForMember(
-                    dest => dest.move,
-                    opt => opt.MapFrom(src => src.levelUpMoves)
-                );
-            CreateMap<pokemon, evolutionLearnedMoves>()
-                .ForMember(
-                    dest => dest.move,
-                    opt => opt.MapFrom(src => src.evolutionMoves)
-                );
-            CreateMap<pokemon, eggMoves>()
-                .ForMember(
-                    dest => dest.move,
-                    opt => opt.MapFrom(src => src.eggMoves)
-                );
-            CreateMap<pokemon, tmLearnedMoves>()
-                .ForMember(
-                    dest => dest.tm_id,
-                    opt => opt.MapFrom(src => src.tmMoves)
-                );
-            CreateMap<pokemon, trLearnedMoves>()
-                .ForMember(
-                    dest => dest.tr_id,
-                    opt => opt.MapFrom(src => src.trMoves)
-                );
+            CreateMap<pokemonEntity, pokemon>();
             CreateMap<evolution, evolutionLine>();
             CreateMap<entities.typeEffectiveness, Domain.typeEffectiveness>();
         }

@@ -7,7 +7,6 @@ namespace server.Domain
 {
     public class pokemon
     {
-        public int pokemon_id { get; set; }
         public int pokdex_id { get; set; }
         public string pokemon_name { get; set; }
         public string species { get; set; }

@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Collections.Generic;
 
 namespace server.DataAccess.entities
 {
@@ -36,5 +37,14 @@ namespace server.DataAccess.entities
         public int total { get; set; }
         [Required]
         public string description { get; set; }
+
+        public List<pokemonTypes> type { get; set; }
+        public List<pokemonAbilties> abilities { get; set; }
+        public List<pokemonEggGroups> eggGroups { get; set; }
+        public List<levelupLearnedMoves> levelUpMoves { get; set; }
+        public List<evolutionLearnedMoves> evolutionMoves { get; set; }
+        public List<eggMoves> eggMoves { get; set; }
+        public List<tmLearnedMoves> tmMoves { get; set; }
+        public List<trLearnedMoves> trMoves { get; set; }
     }
 }

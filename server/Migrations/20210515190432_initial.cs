@@ -7,18 +7,6 @@ namespace server.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "abilities",
-                columns: table => new
-                {
-                    ability_name = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    description = table.Column<string>(type: "nvarchar(max)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_abilities", x => x.ability_name);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "accuracy_values",
                 columns: table => new
                 {
@@ -28,17 +16,6 @@ namespace server.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_accuracy_values", x => x.accuracy);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "egg_groups",
-                columns: table => new
-                {
-                    name = table.Column<string>(type: "nvarchar(450)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_egg_groups", x => x.name);
                 });
 
             migrationBuilder.CreateTable(
@@ -127,14 +104,58 @@ namespace server.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "abilities",
+                columns: table => new
+                {
+                    ability_name = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    pokemonEntitypokemon_id = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_abilities", x => x.ability_name);
+                    table.ForeignKey(
+                        name: "FK_abilities_pokemon_pokemonEntitypokemon_id",
+                        column: x => x.pokemonEntitypokemon_id,
+                        principalTable: "pokemon",
+                        principalColumn: "pokemon_id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "egg_groups",
+                columns: table => new
+                {
+                    name = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    pokemonEntitypokemon_id = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_egg_groups", x => x.name);
+                    table.ForeignKey(
+                        name: "FK_egg_groups_pokemon_pokemonEntitypokemon_id",
+                        column: x => x.pokemonEntitypokemon_id,
+                        principalTable: "pokemon",
+                        principalColumn: "pokemon_id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "typing",
                 columns: table => new
                 {
-                    typing_name = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    typing_name = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    pokemonEntitypokemon_id = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_typing", x => x.typing_name);
+                    table.ForeignKey(
+                        name: "FK_typing_pokemon_pokemonEntitypokemon_id",
+                        column: x => x.pokemonEntitypokemon_id,
+                        principalTable: "pokemon",
+                        principalColumn: "pokemon_id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -520,6 +541,16 @@ namespace server.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_abilities_pokemonEntitypokemon_id",
+                table: "abilities",
+                column: "pokemonEntitypokemon_id");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_egg_groups_pokemonEntitypokemon_id",
+                table: "egg_groups",
+                column: "pokemonEntitypokemon_id");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_egg_moves_move",
                 table: "egg_moves",
                 column: "move");
@@ -677,6 +708,11 @@ namespace server.Migrations
                 table: "type_effectiveness",
                 column: "defending_type",
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_typing_pokemonEntitypokemon_id",
+                table: "typing",
+                column: "pokemonEntitypokemon_id");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -727,9 +763,6 @@ namespace server.Migrations
                 name: "tm");
 
             migrationBuilder.DropTable(
-                name: "pokemon");
-
-            migrationBuilder.DropTable(
                 name: "tr");
 
             migrationBuilder.DropTable(
@@ -749,6 +782,9 @@ namespace server.Migrations
 
             migrationBuilder.DropTable(
                 name: "typing");
+
+            migrationBuilder.DropTable(
+                name: "pokemon");
         }
     }
 }
