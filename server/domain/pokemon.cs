@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using server.DataAccess.entities;
 
 namespace server.Domain
 {
@@ -24,10 +25,10 @@ namespace server.Domain
         public List<string> type { get; set; }
         public List<string> abilities { get; set; }
         public List<string> eggGroups { get; set; }
-        public List<string> levelUpMoves { get; set; }
-        public List<string> evolutionMoves { get; set; }
-        public List<string> eggMoves { get; set; }
-        public List<int> tmMoves { get; set; }
-        public List<int> trMoves { get; set; }
+        public List<levelupMoves> levelUpMoves { get; set; }
+        public List<evolutionLearnedMoves> evolutionMoves { get; set; }
+        public List<eggMoves> eggMoves { get; set; }
+        public List<tmLearnedMoves> tmMoves { get; set; }
+        public List<trLearnedMoves> trMoves { get; set; }
     }
 }
