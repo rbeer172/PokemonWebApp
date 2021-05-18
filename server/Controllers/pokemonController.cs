@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 using System.Linq;
 using AutoMapper;
 using server.DataAccess;
@@ -22,11 +23,47 @@ namespace server.Controllers
             map = _map;
         }
 
-        [HttpGet]
-        public ActionResult<IEnumerable<pokemon>> getAllPokemon()
+        [HttpGet, Route("")]
+        public async Task<ActionResult> getAllPokemon()
         {
-            //var pokemonResult = db.pokemon.Include(x => x.type).ToList();
-            return Ok(map.ProjectTo<pokemon>(db.pokemon));
+            var result = await db.pokemon
+                .Select(columns => columns.pokemon_name)
+                .ToListAsync();
+            return Ok(result);
+        }
+
+        [HttpGet, Route("{pokedexID}")]
+        public async Task<ActionResult> getPokemonData(int pokedexID)
+        {
+            var result = await map.ProjectTo<pokemon>(db.pokemon)
+                .Where(columns => columns.pokdex_id == pokedexID)
+                .ToListAsync();
+
+            return Ok(result);
+        }
+
+        [HttpGet, Route("/evolution/{pokedexID}")]
+        public async Task<ActionResult> getPokemonDataWithEvolution(int pokedexID)
+        {
+            var result = await map.ProjectTo<pokemon>(db.pokemon)
+                .Where(columns => columns.pokdex_id == pokedexID)
+                .ToListAsync();
+
+            int id = await db.pokemon
+                .Where(columns => columns.pokdex_id == pokedexID)
+                .Select(row => row.pokemon_id)
+                .FirstOrDefaultAsync();
+
+            int evolutionId = await db.evolution
+                .Where(columns => columns.pokemon_id == id)
+                .Select(row => row.evolution_id)
+                .FirstOrDefaultAsync();
+
+            var evolution = await db.evolution
+                .Where(columns => columns.evolution_id == evolutionId)
+                .ToListAsync();
+
+            return Ok(new { pokemon = result, evolutionTree = evolution });
         }
     }
 }
