@@ -35,6 +35,7 @@ namespace server.DataAccess
         public DbSet<moveCategories> move_categories { get; set; }
         public DbSet<typeEffectiveness> type_effectiveness { get; set; }
         public DbSet<typing> types { get; set; }
+        public DbSet<pokemonEvolutionGroup> pokemon_evolution_group { get; set; }
 
         protected override void OnModelCreating(ModelBuilder model)
         {
@@ -85,6 +86,7 @@ namespace server.DataAccess
             model.ApplyConfiguration(new pokemonEggGroupsConfig());
             model.ApplyConfiguration(new evolutionGroupsConfig());
             model.ApplyConfiguration(new evolutionConfig());
+            model.ApplyConfiguration(new pokemonEvolutionGroupConfig());
         }
     }
 }

@@ -53,9 +53,9 @@ namespace server.Controllers
                 .Select(row => row.pokemon_id)
                 .FirstOrDefaultAsync();
 
-            int evolutionId = await db.evolution
+            int evolutionId = await db.pokemon_evolution_group
                 .Where(columns => columns.pokemon_id == id)
-                .Select(row => row.evolution_id)
+                .Select(row => row.group_id)
                 .FirstOrDefaultAsync();
 
             var evolution = await map.ProjectTo<evolutionLine>(db.evolution
