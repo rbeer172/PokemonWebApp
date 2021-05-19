@@ -10,7 +10,7 @@ namespace server.Domain
         public int TM { get; set; }
         public string Move { get; set; }
         public string Category { get; set; }
-        public int Power { get; set; }
-        public int Accuracy { get; set; }
+        public int? Power { get; set; }
+        public int? Accuracy { get; set; }
     }
 }

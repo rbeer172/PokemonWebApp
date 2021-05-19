@@ -39,6 +39,11 @@ namespace server.DataAccess
                 .ForMember(domain => domain.Accuracy, value => value.MapFrom(db => db.pokemon_move.move.accuracy))
                 .ForMember(domain => domain.Category, value => value.MapFrom(db => db.pokemon_move.move.category))
                 .ForMember(domain => domain.Power, value => value.MapFrom(db => db.pokemon_move.move.power));
+            CreateMap<entities.eggMoves, Domain.eggMoves>()
+                .ForMember(domain => domain.Move, value => value.MapFrom(db => db.move))
+                .ForMember(domain => domain.Accuracy, value => value.MapFrom(db => db.pokemon_move.accuracy))
+                .ForMember(domain => domain.Category, value => value.MapFrom(db => db.pokemon_move.category))
+                .ForMember(domain => domain.Power, value => value.MapFrom(db => db.pokemon_move.power));
 
 
             CreateMap<pokemonEntity, pokemon>();

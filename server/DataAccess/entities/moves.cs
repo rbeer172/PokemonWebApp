@@ -19,11 +19,11 @@ namespace server.DataAccess.entities
         [ForeignKey(nameof(category))]
         public moveCategories move_category { get; set; }
 
-        public int power { get; set; }
+        public int? power { get; set; }
         [ForeignKey(nameof(power))]
         public powerValues move_power { get; set; }
 
-        public int accuracy { get; set; }
+        public int? accuracy { get; set; }
         [ForeignKey(nameof(accuracy))]
         public accuracyValues move_accuracy { get; set; }
 

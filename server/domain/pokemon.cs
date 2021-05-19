@@ -26,9 +26,9 @@ namespace server.Domain
         public List<string> abilities { get; set; }
         public List<string> eggGroups { get; set; }
         public List<levelupMoves> levelUpMoves { get; set; }
-        public List<evolutionLearnedMoves> evolutionMoves { get; set; }
+        public List<evolutionMoves> evolutionMoves { get; set; }
         public List<eggMoves> eggMoves { get; set; }
-        public List<tmLearnedMoves> tmMoves { get; set; }
-        public List<trLearnedMoves> trMoves { get; set; }
+        public List<tmMoves> tmMoves { get; set; }
+        public List<trMoves> trMoves { get; set; }
     }
 }

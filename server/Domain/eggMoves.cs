@@ -1,8 +1,7 @@
 ﻿namespace server.Domain
 {
-    public class levelupMoves
+    public class eggMoves
     {
-        public int Level { get; set; }
         public string Move { get; set; }
         public string Category { get; set; }
         public int? Power { get; set; }
