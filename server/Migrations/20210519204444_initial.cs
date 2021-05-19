@@ -7,6 +7,18 @@ namespace server.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
+                name: "abilities",
+                columns: table => new
+                {
+                    ability_name = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    description = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_abilities", x => x.ability_name);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "accuracy_values",
                 columns: table => new
                 {
@@ -16,6 +28,17 @@ namespace server.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_accuracy_values", x => x.accuracy);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "egg_groups",
+                columns: table => new
+                {
+                    name = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_egg_groups", x => x.name);
                 });
 
             migrationBuilder.CreateTable(
@@ -104,58 +127,14 @@ namespace server.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "abilities",
-                columns: table => new
-                {
-                    ability_name = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    pokemonEntitypokemon_id = table.Column<int>(type: "int", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_abilities", x => x.ability_name);
-                    table.ForeignKey(
-                        name: "FK_abilities_pokemon_pokemonEntitypokemon_id",
-                        column: x => x.pokemonEntitypokemon_id,
-                        principalTable: "pokemon",
-                        principalColumn: "pokemon_id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "egg_groups",
-                columns: table => new
-                {
-                    name = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    pokemonEntitypokemon_id = table.Column<int>(type: "int", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_egg_groups", x => x.name);
-                    table.ForeignKey(
-                        name: "FK_egg_groups_pokemon_pokemonEntitypokemon_id",
-                        column: x => x.pokemonEntitypokemon_id,
-                        principalTable: "pokemon",
-                        principalColumn: "pokemon_id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "typing",
                 columns: table => new
                 {
-                    typing_name = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    pokemonEntitypokemon_id = table.Column<int>(type: "int", nullable: true)
+                    typing_name = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_typing", x => x.typing_name);
-                    table.ForeignKey(
-                        name: "FK_typing_pokemon_pokemonEntitypokemon_id",
-                        column: x => x.pokemonEntitypokemon_id,
-                        principalTable: "pokemon",
-                        principalColumn: "pokemon_id",
-                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -218,8 +197,8 @@ namespace server.Migrations
                     name = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     typing_name = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     category = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    power = table.Column<int>(type: "int", nullable: false),
-                    accuracy = table.Column<int>(type: "int", nullable: false),
+                    power = table.Column<int>(type: "int", nullable: true),
+                    accuracy = table.Column<int>(type: "int", nullable: true),
                     pp = table.Column<int>(type: "int", nullable: false),
                     priority = table.Column<int>(type: "int", nullable: false),
                     description = table.Column<string>(type: "nvarchar(max)", nullable: false)
@@ -232,7 +211,7 @@ namespace server.Migrations
                         column: x => x.accuracy,
                         principalTable: "accuracy_values",
                         principalColumn: "accuracy",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_moves_move_categories_category",
                         column: x => x.category,
@@ -244,7 +223,7 @@ namespace server.Migrations
                         column: x => x.power,
                         principalTable: "power_values",
                         principalColumn: "power",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_moves_pp_values_pp",
                         column: x => x.pp,
@@ -540,15 +519,214 @@ namespace server.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.CreateIndex(
-                name: "IX_abilities_pokemonEntitypokemon_id",
+            migrationBuilder.InsertData(
                 table: "abilities",
-                column: "pokemonEntitypokemon_id");
+                columns: new[] { "ability_name", "description" },
+                values: new object[,]
+                {
+                    { "Overgrow", "Increases the power of Grass-type moves by 50% when the ability-bearer's HP falls below a third of its maximum HP" },
+                    { "Chlorophyll", "Doubles the ability-bearer's Speed during bright sunshine." }
+                });
 
-            migrationBuilder.CreateIndex(
-                name: "IX_egg_groups_pokemonEntitypokemon_id",
+            migrationBuilder.InsertData(
+                table: "accuracy_values",
+                column: "accuracy",
+                values: new object[]
+                {
+                    75,
+                    100
+                });
+
+            migrationBuilder.InsertData(
                 table: "egg_groups",
-                column: "pokemonEntitypokemon_id");
+                column: "name",
+                values: new object[]
+                {
+                    "Grass",
+                    "Monster"
+                });
+
+            migrationBuilder.InsertData(
+                table: "evolution_group",
+                column: "id",
+                value: 1);
+
+            migrationBuilder.InsertData(
+                table: "move_categories",
+                column: "category",
+                values: new object[]
+                {
+                    "physical",
+                    "special",
+                    "status"
+                });
+
+            migrationBuilder.InsertData(
+                table: "pokemon",
+                columns: new[] { "pokemon_id", "attack", "defense", "description", "growth_rate", "height", "hp", "pokdex_id", "pokemon_name", "special_attack", "special_defense", "species", "speed", "total", "weight" },
+                values: new object[,]
+                {
+                    { 3, 82, 83, "A Grass/Poison type Pokémon introduced in Generation 1.", "medium slow", 2f, 80, 3, "Venusaur", 100, 100, "Seed", 80, 525, 100f },
+                    { 2, 62, 63, "A Grass/Poison type Pokémon introduced in Generation 1.", "medium slow", 1f, 60, 2, "Ivysaur", 80, 80, "Seed", 60, 405, 13f },
+                    { 1, 49, 49, "A Grass/Poison type Pokémon introduced in Generation 1.", "medium slow", 0.7f, 45, 1, "Bulbasaur", 65, 65, "Seed", 45, 318, 6.9f }
+                });
+
+            migrationBuilder.InsertData(
+                table: "power_values",
+                column: "power",
+                values: new object[]
+                {
+                    40,
+                    75,
+                    90,
+                    120
+                });
+
+            migrationBuilder.InsertData(
+                table: "pp_values",
+                column: "pp",
+                values: new object[]
+                {
+                    10,
+                    15,
+                    20,
+                    35
+                });
+
+            migrationBuilder.InsertData(
+                table: "typing",
+                column: "typing_name",
+                values: new object[]
+                {
+                    "normal",
+                    "grass",
+                    "poison"
+                });
+
+            migrationBuilder.InsertData(
+                table: "evolution",
+                columns: new[] { "id", "evolution_id", "evolved_pokemon", "friendship", "held_item", "level", "move", "other", "pokemon_id", "time", "trade", "use_item" },
+                values: new object[,]
+                {
+                    { 1, 1, 2, false, null, 16, null, null, 1, null, false, null },
+                    { 2, 1, 3, false, null, 32, null, null, 2, null, false, null }
+                });
+
+            migrationBuilder.InsertData(
+                table: "moves",
+                columns: new[] { "name", "accuracy", "category", "description", "power", "pp", "priority", "typing_name" },
+                values: new object[,]
+                {
+                    { "Poison Powder", 75, "status", "Target will be poisoned. Poisoned Pokémon lose 1⁄8 of their maximum HP each turn.", null, 35, 0, "poison" },
+                    { "Petal Blizzard", 100, "physical", "Deals damage.", 90, 15, 0, "grass" },
+                    { "Giga Drain", 100, "special", "Deals damage and the user will recover 50% of the HP drained.", 75, 10, 0, "grass" },
+                    { "Petal Dance", 100, "special", "The user of Petal Dance attacks for 2-3 turns, during which it cannot switch out, and then becomes confused, for 1-4 attacking turns (50% chance in Generations 1-6). The damage received is as if the Pokémon attacks itself with a typeless 40 base power Physical attack. If Petal Dance is disrupted (e.g. if the move misses or the user cannot attack due to paralysis) then it will stop and not cause confusion.", 120, 10, 0, "grass" },
+                    { "Solar Beam", 100, "special", "Charges the first turn then deals damage the second turn. If during sunlight or holding a power herb, deals damage the first turn.Rain, hail and sandstorm weather reduces power by 50%", 120, 10, 0, "grass" },
+                    { "Swords Dance", null, "status", "Raises the user's Attack by two stages up to a max of six.", null, 20, 0, "normal" },
+                    { "Tackle", 100, "physical", "A basic attack that deals damage.", 40, 35, 0, "normal" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "pokemon_abilities",
+                columns: new[] { "id", "ability", "hidden", "pokemon_id" },
+                values: new object[,]
+                {
+                    { 1, "Overgrow", false, 1 },
+                    { 2, "Chlorophyll", false, 1 },
+                    { 3, "Overgrow", false, 2 },
+                    { 4, "Chlorophyll", false, 2 },
+                    { 5, "Overgrow", false, 3 },
+                    { 6, "Chlorophyll", false, 3 }
+                });
+
+            migrationBuilder.InsertData(
+                table: "pokemon_egg_groups",
+                columns: new[] { "id", "eggGroup", "pokemon_id" },
+                values: new object[,]
+                {
+                    { 6, "Monster", 3 },
+                    { 5, "Grass", 3 },
+                    { 4, "Monster", 2 },
+                    { 3, "Grass", 2 },
+                    { 2, "Monster", 1 },
+                    { 1, "Grass", 1 }
+                });
+
+            migrationBuilder.InsertData(
+                table: "pokemon_types",
+                columns: new[] { "id", "pokemon_id", "type" },
+                values: new object[,]
+                {
+                    { 1, 1, "grass" },
+                    { 3, 2, "grass" },
+                    { 5, 3, "grass" },
+                    { 2, 1, "poison" },
+                    { 4, 2, "poison" },
+                    { 6, 3, "poison" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "egg_moves",
+                columns: new[] { "id", "move", "pokemon_id" },
+                values: new object[,]
+                {
+                    { 2, "Petal Dance", 2 },
+                    { 3, "Petal Dance", 3 },
+                    { 1, "Petal Dance", 1 }
+                });
+
+            migrationBuilder.InsertData(
+                table: "evolution_learned_moves",
+                columns: new[] { "id", "move", "pokemon_id" },
+                values: new object[] { 1, "Petal Blizzard", 3 });
+
+            migrationBuilder.InsertData(
+                table: "levelup_learned_moves",
+                columns: new[] { "id", "level", "move", "pokemon_id" },
+                values: new object[,]
+                {
+                    { 2, 15, "Poison Powder", 1 },
+                    { 10, 1, "Petal Blizzard", 3 },
+                    { 11, 1, "Petal Dance", 3 },
+                    { 5, 15, "Poison Powder", 2 },
+                    { 1, 1, "Tackle", 1 },
+                    { 6, 50, "Solar Beam", 2 },
+                    { 3, 36, "Solar Beam", 1 },
+                    { 7, 1, "Tackle", 3 },
+                    { 4, 1, "Tackle", 2 },
+                    { 9, 58, "Solar Beam", 3 },
+                    { 8, 15, "Poison Powder", 3 }
+                });
+
+            migrationBuilder.InsertData(
+                table: "tm",
+                columns: new[] { "id", "move_name" },
+                values: new object[] { 28, "Giga Drain" });
+
+            migrationBuilder.InsertData(
+                table: "tr",
+                columns: new[] { "id", "move_name" },
+                values: new object[] { 1, "Swords Dance" });
+
+            migrationBuilder.InsertData(
+                table: "tm_learned_moves",
+                columns: new[] { "id", "pokemon_id", "tm_id" },
+                values: new object[,]
+                {
+                    { 1, 1, 28 },
+                    { 2, 2, 28 },
+                    { 3, 3, 28 }
+                });
+
+            migrationBuilder.InsertData(
+                table: "tr_learned_moves",
+                columns: new[] { "id", "pokemon_id", "tr_id" },
+                values: new object[,]
+                {
+                    { 1, 1, 1 },
+                    { 2, 2, 1 },
+                    { 3, 3, 1 }
+                });
 
             migrationBuilder.CreateIndex(
                 name: "IX_egg_moves_move",
@@ -708,11 +886,6 @@ namespace server.Migrations
                 table: "type_effectiveness",
                 column: "defending_type",
                 unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_typing_pokemonEntitypokemon_id",
-                table: "typing",
-                column: "pokemonEntitypokemon_id");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -763,6 +936,9 @@ namespace server.Migrations
                 name: "tm");
 
             migrationBuilder.DropTable(
+                name: "pokemon");
+
+            migrationBuilder.DropTable(
                 name: "tr");
 
             migrationBuilder.DropTable(
@@ -782,9 +958,6 @@ namespace server.Migrations
 
             migrationBuilder.DropTable(
                 name: "typing");
-
-            migrationBuilder.DropTable(
-                name: "pokemon");
         }
     }
 }

@@ -10,8 +10,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace server.Controllers
 {
-    [ApiController]
-    [Route("api")]
+    [Route("api/pokemon")]
     public class pokemonController : ControllerBase
     {
         private readonly IMapper map;
@@ -42,7 +41,7 @@ namespace server.Controllers
             return Ok(result);
         }
 
-        [HttpGet, Route("/evolution/{pokedexID}")]
+        [HttpGet, Route("evolution/{pokedexID}")]
         public async Task<ActionResult> getPokemonDataWithEvolution(int pokedexID)
         {
             var result = await map.ProjectTo<pokemon>(db.pokemon)
@@ -59,8 +58,8 @@ namespace server.Controllers
                 .Select(row => row.evolution_id)
                 .FirstOrDefaultAsync();
 
-            var evolution = await db.evolution
-                .Where(columns => columns.evolution_id == evolutionId)
+            var evolution = await map.ProjectTo<evolutionLine>(db.evolution
+                .Where(columns => columns.evolution_id == evolutionId))
                 .ToListAsync();
 
             return Ok(new { pokemon = result, evolutionTree = evolution });

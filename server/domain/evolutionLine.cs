@@ -7,9 +7,8 @@ namespace server.Domain
 {
     public class evolutionLine
     {
-        public int pokemon_id { get; set; }
-        public int evolution_id { get; set; }
-        public int evolved_pokemon { get; set; }
+        public string pokemon { get; set; }
+        public string evolved_pokemon { get; set; }
         public int? level { get; set; }
         public string held_item { get; set; }
         public string use_item { get; set; }
@@ -18,5 +17,6 @@ namespace server.Domain
         public string move { get; set; }
         public bool trade { get; set; }
         public string other { get; set; }
+
     }
 }

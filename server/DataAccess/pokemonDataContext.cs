@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using server.DataAccess.entities;
+using server.DataAccess.seeder;
 
 namespace server.DataAccess
 {
@@ -38,6 +39,9 @@ namespace server.DataAccess
         protected override void OnModelCreating(ModelBuilder model)
         {
             //model.Entity<eggMoves>().HasKey(l => new { l.pokemon_id , l.move });
+            //model.Entity<evolutionLearnedMoves>().HasKey(l => new { l.pokemon_id, l.move});
+            //model.Entity<levelupLearnedMoves>().HasKey(l => new { l.pokemon_id, l.move });
+
             model.Entity<evolution>()
                 .HasOne(pt => pt.pokemon)
                 .WithOne()
@@ -59,8 +63,28 @@ namespace server.DataAccess
                 .WithOne()
                 .HasForeignKey<typeEffectiveness>(pt => pt.defending_type)
                 .OnDelete(DeleteBehavior.Restrict);
-            //model.Entity<evolutionLearnedMoves>().HasKey(l => new { l.pokemon_id, l.move});
-            //model.Entity<levelupLearnedMoves>().HasKey(l => new { l.pokemon_id, l.move });
+
+            model.ApplyConfiguration(new accuracyConfig());
+            model.ApplyConfiguration(new powerConfig());
+            model.ApplyConfiguration(new ppConfig());
+            model.ApplyConfiguration(new categoryConfig());
+            model.ApplyConfiguration(new typingConfig());
+            model.ApplyConfiguration(new moveConfig());
+            model.ApplyConfiguration(new pokemonConfig());
+            model.ApplyConfiguration(new pokemonTypesConfig());
+            model.ApplyConfiguration(new abilitiesConfig());
+            model.ApplyConfiguration(new pokemonabilityConfig());
+            model.ApplyConfiguration(new pokemonLeveledMovesConfig());
+            model.ApplyConfiguration(new tmConfig());
+            model.ApplyConfiguration(new pokemonTmMovesConfig());
+            model.ApplyConfiguration(new trConfig());
+            model.ApplyConfiguration(new pokemonTrMovesConfig());
+            model.ApplyConfiguration(new eggMovesConfig());
+            model.ApplyConfiguration(new evolutionMovesConfig());
+            model.ApplyConfiguration(new eggGroupsConfig());
+            model.ApplyConfiguration(new pokemonEggGroupsConfig());
+            model.ApplyConfiguration(new evolutionGroupsConfig());
+            model.ApplyConfiguration(new evolutionConfig());
         }
     }
 }

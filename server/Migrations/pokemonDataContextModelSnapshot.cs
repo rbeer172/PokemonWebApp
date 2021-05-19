@@ -28,14 +28,21 @@ namespace server.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("pokemonEntitypokemon_id")
-                        .HasColumnType("int");
-
                     b.HasKey("ability_name");
 
-                    b.HasIndex("pokemonEntitypokemon_id");
-
                     b.ToTable("abilities");
+
+                    b.HasData(
+                        new
+                        {
+                            ability_name = "Overgrow",
+                            description = "Increases the power of Grass-type moves by 50% when the ability-bearer's HP falls below a third of its maximum HP"
+                        },
+                        new
+                        {
+                            ability_name = "Chlorophyll",
+                            description = "Doubles the ability-bearer's Speed during bright sunshine."
+                        });
                 });
 
             modelBuilder.Entity("server.DataAccess.entities.accuracyValues", b =>
@@ -48,6 +55,16 @@ namespace server.Migrations
                     b.HasKey("accuracy");
 
                     b.ToTable("accuracy_values");
+
+                    b.HasData(
+                        new
+                        {
+                            accuracy = 75
+                        },
+                        new
+                        {
+                            accuracy = 100
+                        });
                 });
 
             modelBuilder.Entity("server.DataAccess.entities.eggGroups", b =>
@@ -55,14 +72,19 @@ namespace server.Migrations
                     b.Property<string>("name")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<int?>("pokemonEntitypokemon_id")
-                        .HasColumnType("int");
-
                     b.HasKey("name");
 
-                    b.HasIndex("pokemonEntitypokemon_id");
-
                     b.ToTable("egg_groups");
+
+                    b.HasData(
+                        new
+                        {
+                            name = "Grass"
+                        },
+                        new
+                        {
+                            name = "Monster"
+                        });
                 });
 
             modelBuilder.Entity("server.DataAccess.entities.eggMoves", b =>
@@ -86,6 +108,26 @@ namespace server.Migrations
                     b.HasIndex("pokemon_id");
 
                     b.ToTable("egg_moves");
+
+                    b.HasData(
+                        new
+                        {
+                            id = 1,
+                            move = "Petal Dance",
+                            pokemon_id = 1
+                        },
+                        new
+                        {
+                            id = 2,
+                            move = "Petal Dance",
+                            pokemon_id = 2
+                        },
+                        new
+                        {
+                            id = 3,
+                            move = "Petal Dance",
+                            pokemon_id = 3
+                        });
                 });
 
             modelBuilder.Entity("server.DataAccess.entities.evolution", b =>
@@ -145,6 +187,28 @@ namespace server.Migrations
                     b.HasIndex("use_item");
 
                     b.ToTable("evolution");
+
+                    b.HasData(
+                        new
+                        {
+                            id = 1,
+                            evolution_id = 1,
+                            evolved_pokemon = 2,
+                            friendship = false,
+                            level = 16,
+                            pokemon_id = 1,
+                            trade = false
+                        },
+                        new
+                        {
+                            id = 2,
+                            evolution_id = 1,
+                            evolved_pokemon = 3,
+                            friendship = false,
+                            level = 32,
+                            pokemon_id = 2,
+                            trade = false
+                        });
                 });
 
             modelBuilder.Entity("server.DataAccess.entities.evolutionGroup", b =>
@@ -157,6 +221,12 @@ namespace server.Migrations
                     b.HasKey("id");
 
                     b.ToTable("evolution_group");
+
+                    b.HasData(
+                        new
+                        {
+                            id = 1
+                        });
                 });
 
             modelBuilder.Entity("server.DataAccess.entities.evolutionLearnedMoves", b =>
@@ -180,6 +250,14 @@ namespace server.Migrations
                     b.HasIndex("pokemon_id");
 
                     b.ToTable("evolution_learned_moves");
+
+                    b.HasData(
+                        new
+                        {
+                            id = 1,
+                            move = "Petal Blizzard",
+                            pokemon_id = 3
+                        });
                 });
 
             modelBuilder.Entity("server.DataAccess.entities.items", b =>
@@ -220,6 +298,85 @@ namespace server.Migrations
                     b.HasIndex("pokemon_id");
 
                     b.ToTable("levelup_learned_moves");
+
+                    b.HasData(
+                        new
+                        {
+                            id = 1,
+                            level = 1,
+                            move = "Tackle",
+                            pokemon_id = 1
+                        },
+                        new
+                        {
+                            id = 2,
+                            level = 15,
+                            move = "Poison Powder",
+                            pokemon_id = 1
+                        },
+                        new
+                        {
+                            id = 3,
+                            level = 36,
+                            move = "Solar Beam",
+                            pokemon_id = 1
+                        },
+                        new
+                        {
+                            id = 4,
+                            level = 1,
+                            move = "Tackle",
+                            pokemon_id = 2
+                        },
+                        new
+                        {
+                            id = 5,
+                            level = 15,
+                            move = "Poison Powder",
+                            pokemon_id = 2
+                        },
+                        new
+                        {
+                            id = 6,
+                            level = 50,
+                            move = "Solar Beam",
+                            pokemon_id = 2
+                        },
+                        new
+                        {
+                            id = 7,
+                            level = 1,
+                            move = "Tackle",
+                            pokemon_id = 3
+                        },
+                        new
+                        {
+                            id = 8,
+                            level = 15,
+                            move = "Poison Powder",
+                            pokemon_id = 3
+                        },
+                        new
+                        {
+                            id = 9,
+                            level = 58,
+                            move = "Solar Beam",
+                            pokemon_id = 3
+                        },
+                        new
+                        {
+                            id = 10,
+                            level = 1,
+                            move = "Petal Blizzard",
+                            pokemon_id = 3
+                        },
+                        new
+                        {
+                            id = 11,
+                            level = 1,
+                            move = "Petal Dance",
+                            pokemon_id = 3
+                        });
                 });
 
             modelBuilder.Entity("server.DataAccess.entities.moveCategories", b =>
@@ -230,6 +387,20 @@ namespace server.Migrations
                     b.HasKey("category");
 
                     b.ToTable("move_categories");
+
+                    b.HasData(
+                        new
+                        {
+                            category = "physical"
+                        },
+                        new
+                        {
+                            category = "special"
+                        },
+                        new
+                        {
+                            category = "status"
+                        });
                 });
 
             modelBuilder.Entity("server.DataAccess.entities.moves", b =>
@@ -237,7 +408,7 @@ namespace server.Migrations
                     b.Property<string>("name")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<int>("accuracy")
+                    b.Property<int?>("accuracy")
                         .HasColumnType("int");
 
                     b.Property<string>("category")
@@ -248,7 +419,7 @@ namespace server.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("power")
+                    b.Property<int?>("power")
                         .HasColumnType("int");
 
                     b.Property<int>("pp")
@@ -274,6 +445,82 @@ namespace server.Migrations
                     b.HasIndex("typing_name");
 
                     b.ToTable("moves");
+
+                    b.HasData(
+                        new
+                        {
+                            name = "Tackle",
+                            accuracy = 100,
+                            category = "physical",
+                            description = "A basic attack that deals damage.",
+                            power = 40,
+                            pp = 35,
+                            priority = 0,
+                            typing_name = "normal"
+                        },
+                        new
+                        {
+                            name = "Poison Powder",
+                            accuracy = 75,
+                            category = "status",
+                            description = "Target will be poisoned. Poisoned Pokémon lose 1⁄8 of their maximum HP each turn.",
+                            pp = 35,
+                            priority = 0,
+                            typing_name = "poison"
+                        },
+                        new
+                        {
+                            name = "Solar Beam",
+                            accuracy = 100,
+                            category = "special",
+                            description = "Charges the first turn then deals damage the second turn. If during sunlight or holding a power herb, deals damage the first turn.Rain, hail and sandstorm weather reduces power by 50%",
+                            power = 120,
+                            pp = 10,
+                            priority = 0,
+                            typing_name = "grass"
+                        },
+                        new
+                        {
+                            name = "Petal Dance",
+                            accuracy = 100,
+                            category = "special",
+                            description = "The user of Petal Dance attacks for 2-3 turns, during which it cannot switch out, and then becomes confused, for 1-4 attacking turns (50% chance in Generations 1-6). The damage received is as if the Pokémon attacks itself with a typeless 40 base power Physical attack. If Petal Dance is disrupted (e.g. if the move misses or the user cannot attack due to paralysis) then it will stop and not cause confusion.",
+                            power = 120,
+                            pp = 10,
+                            priority = 0,
+                            typing_name = "grass"
+                        },
+                        new
+                        {
+                            name = "Giga Drain",
+                            accuracy = 100,
+                            category = "special",
+                            description = "Deals damage and the user will recover 50% of the HP drained.",
+                            power = 75,
+                            pp = 10,
+                            priority = 0,
+                            typing_name = "grass"
+                        },
+                        new
+                        {
+                            name = "Swords Dance",
+                            category = "status",
+                            description = "Raises the user's Attack by two stages up to a max of six.",
+                            pp = 20,
+                            priority = 0,
+                            typing_name = "normal"
+                        },
+                        new
+                        {
+                            name = "Petal Blizzard",
+                            accuracy = 100,
+                            category = "physical",
+                            description = "Deals damage.",
+                            power = 90,
+                            pp = 15,
+                            priority = 0,
+                            typing_name = "grass"
+                        });
                 });
 
             modelBuilder.Entity("server.DataAccess.entities.pokemonAbilties", b =>
@@ -300,6 +547,50 @@ namespace server.Migrations
                     b.HasIndex("pokemon_id");
 
                     b.ToTable("pokemon_abilities");
+
+                    b.HasData(
+                        new
+                        {
+                            id = 1,
+                            ability = "Overgrow",
+                            hidden = false,
+                            pokemon_id = 1
+                        },
+                        new
+                        {
+                            id = 2,
+                            ability = "Chlorophyll",
+                            hidden = false,
+                            pokemon_id = 1
+                        },
+                        new
+                        {
+                            id = 3,
+                            ability = "Overgrow",
+                            hidden = false,
+                            pokemon_id = 2
+                        },
+                        new
+                        {
+                            id = 4,
+                            ability = "Chlorophyll",
+                            hidden = false,
+                            pokemon_id = 2
+                        },
+                        new
+                        {
+                            id = 5,
+                            ability = "Overgrow",
+                            hidden = false,
+                            pokemon_id = 3
+                        },
+                        new
+                        {
+                            id = 6,
+                            ability = "Chlorophyll",
+                            hidden = false,
+                            pokemon_id = 3
+                        });
                 });
 
             modelBuilder.Entity("server.DataAccess.entities.pokemonEggGroups", b =>
@@ -323,6 +614,44 @@ namespace server.Migrations
                     b.HasIndex("pokemon_id");
 
                     b.ToTable("pokemon_egg_groups");
+
+                    b.HasData(
+                        new
+                        {
+                            id = 1,
+                            eggGroup = "Grass",
+                            pokemon_id = 1
+                        },
+                        new
+                        {
+                            id = 2,
+                            eggGroup = "Monster",
+                            pokemon_id = 1
+                        },
+                        new
+                        {
+                            id = 3,
+                            eggGroup = "Grass",
+                            pokemon_id = 2
+                        },
+                        new
+                        {
+                            id = 4,
+                            eggGroup = "Monster",
+                            pokemon_id = 2
+                        },
+                        new
+                        {
+                            id = 5,
+                            eggGroup = "Grass",
+                            pokemon_id = 3
+                        },
+                        new
+                        {
+                            id = 6,
+                            eggGroup = "Monster",
+                            pokemon_id = 3
+                        });
                 });
 
             modelBuilder.Entity("server.DataAccess.entities.pokemonEntity", b =>
@@ -381,6 +710,62 @@ namespace server.Migrations
                     b.HasKey("pokemon_id");
 
                     b.ToTable("pokemon");
+
+                    b.HasData(
+                        new
+                        {
+                            pokemon_id = 1,
+                            attack = 49,
+                            defense = 49,
+                            description = "A Grass/Poison type Pokémon introduced in Generation 1.",
+                            growth_rate = "medium slow",
+                            height = 0.7f,
+                            hp = 45,
+                            pokdex_id = 1,
+                            pokemon_name = "Bulbasaur",
+                            special_attack = 65,
+                            special_defense = 65,
+                            species = "Seed",
+                            speed = 45,
+                            total = 318,
+                            weight = 6.9f
+                        },
+                        new
+                        {
+                            pokemon_id = 2,
+                            attack = 62,
+                            defense = 63,
+                            description = "A Grass/Poison type Pokémon introduced in Generation 1.",
+                            growth_rate = "medium slow",
+                            height = 1f,
+                            hp = 60,
+                            pokdex_id = 2,
+                            pokemon_name = "Ivysaur",
+                            special_attack = 80,
+                            special_defense = 80,
+                            species = "Seed",
+                            speed = 60,
+                            total = 405,
+                            weight = 13f
+                        },
+                        new
+                        {
+                            pokemon_id = 3,
+                            attack = 82,
+                            defense = 83,
+                            description = "A Grass/Poison type Pokémon introduced in Generation 1.",
+                            growth_rate = "medium slow",
+                            height = 2f,
+                            hp = 80,
+                            pokdex_id = 3,
+                            pokemon_name = "Venusaur",
+                            special_attack = 100,
+                            special_defense = 100,
+                            species = "Seed",
+                            speed = 80,
+                            total = 525,
+                            weight = 100f
+                        });
                 });
 
             modelBuilder.Entity("server.DataAccess.entities.pokemonTypes", b =>
@@ -404,6 +789,44 @@ namespace server.Migrations
                     b.HasIndex("type");
 
                     b.ToTable("pokemon_types");
+
+                    b.HasData(
+                        new
+                        {
+                            id = 1,
+                            pokemon_id = 1,
+                            type = "grass"
+                        },
+                        new
+                        {
+                            id = 2,
+                            pokemon_id = 1,
+                            type = "poison"
+                        },
+                        new
+                        {
+                            id = 3,
+                            pokemon_id = 2,
+                            type = "grass"
+                        },
+                        new
+                        {
+                            id = 4,
+                            pokemon_id = 2,
+                            type = "poison"
+                        },
+                        new
+                        {
+                            id = 5,
+                            pokemon_id = 3,
+                            type = "grass"
+                        },
+                        new
+                        {
+                            id = 6,
+                            pokemon_id = 3,
+                            type = "poison"
+                        });
                 });
 
             modelBuilder.Entity("server.DataAccess.entities.powerValues", b =>
@@ -416,6 +839,24 @@ namespace server.Migrations
                     b.HasKey("power");
 
                     b.ToTable("power_values");
+
+                    b.HasData(
+                        new
+                        {
+                            power = 40
+                        },
+                        new
+                        {
+                            power = 75
+                        },
+                        new
+                        {
+                            power = 90
+                        },
+                        new
+                        {
+                            power = 120
+                        });
                 });
 
             modelBuilder.Entity("server.DataAccess.entities.ppValues", b =>
@@ -428,6 +869,24 @@ namespace server.Migrations
                     b.HasKey("pp");
 
                     b.ToTable("pp_values");
+
+                    b.HasData(
+                        new
+                        {
+                            pp = 10
+                        },
+                        new
+                        {
+                            pp = 15
+                        },
+                        new
+                        {
+                            pp = 20
+                        },
+                        new
+                        {
+                            pp = 35
+                        });
                 });
 
             modelBuilder.Entity("server.DataAccess.entities.tm", b =>
@@ -446,6 +905,13 @@ namespace server.Migrations
                     b.HasIndex("move_name");
 
                     b.ToTable("tm");
+
+                    b.HasData(
+                        new
+                        {
+                            id = 28,
+                            move_name = "Giga Drain"
+                        });
                 });
 
             modelBuilder.Entity("server.DataAccess.entities.tmLearnedMoves", b =>
@@ -468,6 +934,26 @@ namespace server.Migrations
                     b.HasIndex("tm_id");
 
                     b.ToTable("tm_learned_moves");
+
+                    b.HasData(
+                        new
+                        {
+                            id = 1,
+                            pokemon_id = 1,
+                            tm_id = 28
+                        },
+                        new
+                        {
+                            id = 2,
+                            pokemon_id = 2,
+                            tm_id = 28
+                        },
+                        new
+                        {
+                            id = 3,
+                            pokemon_id = 3,
+                            tm_id = 28
+                        });
                 });
 
             modelBuilder.Entity("server.DataAccess.entities.tr", b =>
@@ -486,6 +972,13 @@ namespace server.Migrations
                     b.HasIndex("move_name");
 
                     b.ToTable("tr");
+
+                    b.HasData(
+                        new
+                        {
+                            id = 1,
+                            move_name = "Swords Dance"
+                        });
                 });
 
             modelBuilder.Entity("server.DataAccess.entities.trLearnedMoves", b =>
@@ -508,6 +1001,26 @@ namespace server.Migrations
                     b.HasIndex("tr_id");
 
                     b.ToTable("tr_learned_moves");
+
+                    b.HasData(
+                        new
+                        {
+                            id = 1,
+                            pokemon_id = 1,
+                            tr_id = 1
+                        },
+                        new
+                        {
+                            id = 2,
+                            pokemon_id = 2,
+                            tr_id = 1
+                        },
+                        new
+                        {
+                            id = 3,
+                            pokemon_id = 3,
+                            tr_id = 1
+                        });
                 });
 
             modelBuilder.Entity("server.DataAccess.entities.typeEffectiveness", b =>
@@ -544,28 +1057,23 @@ namespace server.Migrations
                     b.Property<string>("typing_name")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<int?>("pokemonEntitypokemon_id")
-                        .HasColumnType("int");
-
                     b.HasKey("typing_name");
 
-                    b.HasIndex("pokemonEntitypokemon_id");
-
                     b.ToTable("typing");
-                });
 
-            modelBuilder.Entity("server.DataAccess.entities.abilities", b =>
-                {
-                    b.HasOne("server.DataAccess.entities.pokemonEntity", null)
-                        .WithMany("abilities")
-                        .HasForeignKey("pokemonEntitypokemon_id");
-                });
-
-            modelBuilder.Entity("server.DataAccess.entities.eggGroups", b =>
-                {
-                    b.HasOne("server.DataAccess.entities.pokemonEntity", null)
-                        .WithMany("eggGroups")
-                        .HasForeignKey("pokemonEntitypokemon_id");
+                    b.HasData(
+                        new
+                        {
+                            typing_name = "normal"
+                        },
+                        new
+                        {
+                            typing_name = "grass"
+                        },
+                        new
+                        {
+                            typing_name = "poison"
+                        });
                 });
 
             modelBuilder.Entity("server.DataAccess.entities.eggMoves", b =>
@@ -674,9 +1182,7 @@ namespace server.Migrations
                 {
                     b.HasOne("server.DataAccess.entities.accuracyValues", "move_accuracy")
                         .WithMany()
-                        .HasForeignKey("accuracy")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("accuracy");
 
                     b.HasOne("server.DataAccess.entities.moveCategories", "move_category")
                         .WithMany()
@@ -686,9 +1192,7 @@ namespace server.Migrations
 
                     b.HasOne("server.DataAccess.entities.powerValues", "move_power")
                         .WithMany()
-                        .HasForeignKey("power")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("power");
 
                     b.HasOne("server.DataAccess.entities.ppValues", "move_pp")
                         .WithMany()
@@ -722,7 +1226,7 @@ namespace server.Migrations
                         .IsRequired();
 
                     b.HasOne("server.DataAccess.entities.pokemonEntity", "pokemon")
-                        .WithMany()
+                        .WithMany("abilities")
                         .HasForeignKey("pokemon_id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -741,7 +1245,7 @@ namespace server.Migrations
                         .IsRequired();
 
                     b.HasOne("server.DataAccess.entities.pokemonEntity", "pokemon")
-                        .WithMany()
+                        .WithMany("eggGroups")
                         .HasForeignKey("pokemon_id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -754,7 +1258,7 @@ namespace server.Migrations
             modelBuilder.Entity("server.DataAccess.entities.pokemonTypes", b =>
                 {
                     b.HasOne("server.DataAccess.entities.pokemonEntity", "pokemon")
-                        .WithMany()
+                        .WithMany("type")
                         .HasForeignKey("pokemon_id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -847,13 +1351,6 @@ namespace server.Migrations
                     b.Navigation("attack");
 
                     b.Navigation("defend");
-                });
-
-            modelBuilder.Entity("server.DataAccess.entities.typing", b =>
-                {
-                    b.HasOne("server.DataAccess.entities.pokemonEntity", null)
-                        .WithMany("type")
-                        .HasForeignKey("pokemonEntitypokemon_id");
                 });
 
             modelBuilder.Entity("server.DataAccess.entities.pokemonEntity", b =>
