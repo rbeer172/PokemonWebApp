@@ -5,7 +5,9 @@ using System.Threading.Tasks;
 using System.Linq;
 using AutoMapper;
 using server.DataAccess;
+using server.DataAccess.entities;
 using server.Domain;
+using server.Mappings;
 using Microsoft.EntityFrameworkCore;
 
 namespace server.Controllers
@@ -63,6 +65,44 @@ namespace server.Controllers
                 .ToListAsync();
 
             return Ok(new { pokemon = result, evolutionTree = evolution });
+        }
+
+        [HttpPost, Route("")]
+        public async Task<ActionResult> newPokemon([FromBody]newPokemon pokemon)
+        {
+
+            var entitytoPokemon = new pokemonEntitytoPokemon(pokemon);
+            var pokemonData = entitytoPokemon.convert();
+
+            db.pokemon.Add(pokemonData);
+            await db.SaveChangesAsync();
+            return Ok();
+        }
+
+        [HttpPost, Route("update")]
+        public async Task<ActionResult> updatePokemon([FromBody] newPokemon pokemon)
+        {
+
+            var entitytoPokemon = new pokemonEntitytoPokemon(pokemon);
+            var pokemonData = entitytoPokemon.convert();
+
+            db.pokemon.Update(pokemonData);
+            await db.SaveChangesAsync();
+            return Ok();
+        }
+        [HttpDelete, Route("{pokedexID}")]
+
+        public async Task<ActionResult> deletePokemon(int pokedexID)
+        {
+            var result = await db.pokemon
+                .Where(columns => columns.pokdex_id == pokedexID)
+                .ToListAsync();
+
+            foreach (pokemonEntity pokemon in result)
+                db.pokemon.Remove(pokemon);
+
+            await db.SaveChangesAsync();
+            return Ok();
         }
     }
 }

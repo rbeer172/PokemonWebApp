@@ -2,7 +2,7 @@
 
 namespace server.Domain
 {
-    public class pokemon
+    public class newPokemon
     {
         public int pokemon_id { get; set; }
         public int pokdex_id { get; set; }
@@ -23,9 +23,9 @@ namespace server.Domain
         public List<string> abilities { get; set; }
         public List<string> eggGroups { get; set; }
         public List<levelupMoves> levelUpMoves { get; set; }
-        public List<evolutionMoves> evolutionMoves { get; set; }
-        public List<eggMoves> eggMoves { get; set; }
-        public List<tmMoves> tmMoves { get; set; }
-        public List<trMoves> trMoves { get; set; }
+        public List<string> evolutionMoves { get; set; }
+        public List<string> eggMoves { get; set; }
+        public List<int> tmMoves { get; set; }
+        public List<int> trMoves { get; set; }
     }
 }

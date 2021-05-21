@@ -44,12 +44,11 @@ namespace server.DataAccess
                 .ForMember(domain => domain.Accuracy, value => value.MapFrom(db => db.pokemon_move.accuracy))
                 .ForMember(domain => domain.Category, value => value.MapFrom(db => db.pokemon_move.category))
                 .ForMember(domain => domain.Power, value => value.MapFrom(db => db.pokemon_move.power));
-
-
-            CreateMap<pokemonEntity, pokemon>();
             CreateMap<evolution, evolutionLine>()
                 .ForMember(domain => domain.pokemon, value => value.MapFrom(db => db.pokemon.pokemon_name))
                 .ForMember(domain => domain.evolved_pokemon, value => value.MapFrom(db => db.pokemonEvolved.pokemon_name));
+
+            CreateMap<pokemonEntity, pokemon>();
             CreateMap<entities.typeEffectiveness, Domain.typeEffectiveness>();
         }
     }
