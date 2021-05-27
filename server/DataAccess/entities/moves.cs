@@ -35,5 +35,8 @@ namespace server.DataAccess.entities
         public int priority { get; set; }
         [Required]
         public string description { get; set; }
+
+        public tm TM { get; set; }
+        public tr TR { get; set; }
     }
 }

@@ -5,7 +5,6 @@ using AutoMapper;
 using server.DataAccess;
 using server.DataAccess.entities;
 using server.Domain;
-using server.Mappings;
 using Microsoft.EntityFrameworkCore;
 
 namespace server.Controllers
@@ -13,17 +12,20 @@ namespace server.Controllers
     [Route("api/moves")]
     public class movesController : ControllerBase
     {
+        private readonly IMapper map;
         private readonly pokemonDataContext db;
 
-        public movesController(pokemonDataContext _db)
+        public movesController(pokemonDataContext _db, IMapper _map)
         {
             db = _db;
+            map = _map;
         }
 
         [HttpGet, Route("")]
         public async Task<ActionResult> getAllMoves()
         {
-            var result = await db.pokemon_moves.ToListAsync();
+            var result = await map.ProjectTo<move>(db.pokemon_moves)
+                .ToListAsync();
             return Ok(result);
         }
 

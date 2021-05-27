@@ -47,6 +47,17 @@ namespace server.DataAccess
             CreateMap<evolution, evolutionLine>()
                 .ForMember(domain => domain.pokemon, value => value.MapFrom(db => db.pokemon.pokemon_name))
                 .ForMember(domain => domain.evolved_pokemon, value => value.MapFrom(db => db.pokemonEvolved.pokemon_name));
+            CreateMap<moves, move>()
+                .ForMember(domain => domain.Name, value => value.MapFrom(db => db.name))
+                .ForMember(domain => domain.Type, value => value.MapFrom(db => db.typing_name))
+                .ForMember(domain => domain.Accuracy, value => value.MapFrom(db => db.accuracy))
+                .ForMember(domain => domain.Category, value => value.MapFrom(db => db.category))
+                .ForMember(domain => domain.Power, value => value.MapFrom(db => db.power))
+                .ForMember(domain => domain.PP, value => value.MapFrom(db => db.pp))
+                .ForMember(domain => domain.Priority, value => value.MapFrom(db => db.priority))
+                .ForMember(domain => domain.TM, value => value.MapFrom(db => db.TM.id))
+                .ForMember(domain => domain.TR, value => value.MapFrom(db => db.TR.id - 1))
+                .ForMember(domain => domain.Description, value => value.MapFrom(db => db.description));
 
             CreateMap<pokemonEntity, pokemon>();
             CreateMap<entities.typeEffectiveness, Domain.typeEffectiveness>();
