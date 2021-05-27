@@ -20,7 +20,9 @@ namespace server.Controllers
         [HttpGet, Route("")]
         public async Task<ActionResult> getTM()
         {
-            var result = await db.TMs.FirstOrDefaultAsync();
+            var result = await db.TMs
+                .Select(columns => new { TM = columns.id, Move = columns.move_name})
+                .FirstOrDefaultAsync();
 
             return Ok(result);
         }

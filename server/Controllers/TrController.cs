@@ -18,23 +18,25 @@ namespace server.Controllers
         }
 
         [HttpGet, Route("")]
-        public async Task<ActionResult> getTM()
+        public async Task<ActionResult> getTR()
         {
-            var result = await db.TRs.FirstOrDefaultAsync();
+            var result = await db.TRs
+                .Select(columns => new { TR = columns.id, Move = columns.move_name })
+                .FirstOrDefaultAsync();
 
             return Ok(result);
         }
 
         [HttpPost, Route("")]
-        public async Task<ActionResult> newTM([FromBody] tr newTM)
+        public async Task<ActionResult> newTR([FromBody] tr newTR)
         {
-            db.TRs.Add(newTM);
+            db.TRs.Add(newTR);
             await db.SaveChangesAsync();
             return Ok();
         }
 
         [HttpPost, Route("update")]
-        public async Task<ActionResult> updateTM([FromBody] tr newTR)
+        public async Task<ActionResult> updateTR([FromBody] tr newTR)
         {
             db.TRs.Update(newTR);
             await db.SaveChangesAsync();
@@ -42,7 +44,7 @@ namespace server.Controllers
         }
 
         [HttpDelete, Route("{id}")]
-        public async Task<ActionResult> deleteTM(int id)
+        public async Task<ActionResult> deleteTR(int id)
         {
             var result = await db.TRs
                 .Where(columns => columns.id == id)
