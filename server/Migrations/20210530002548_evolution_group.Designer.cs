@@ -10,8 +10,8 @@ using server.DataAccess;
 namespace server.Migrations
 {
     [DbContext(typeof(pokemonDataContext))]
-    [Migration("20210527180621_TmTrJoinMoves")]
-    partial class TmTrJoinMoves
+    [Migration("20210530002548_evolution_group")]
+    partial class evolution_group
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -1144,7 +1144,7 @@ namespace server.Migrations
             modelBuilder.Entity("server.DataAccess.entities.evolution", b =>
                 {
                     b.HasOne("server.DataAccess.entities.evolutionGroup", "pokemon_evolution")
-                        .WithMany()
+                        .WithMany("evolutions")
                         .HasForeignKey("evolution_id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -1304,7 +1304,7 @@ namespace server.Migrations
             modelBuilder.Entity("server.DataAccess.entities.pokemonEvolutionGroup", b =>
                 {
                     b.HasOne("server.DataAccess.entities.evolutionGroup", "group")
-                        .WithMany()
+                        .WithMany("pokemon")
                         .HasForeignKey("group_id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -1416,6 +1416,13 @@ namespace server.Migrations
                     b.Navigation("attack");
 
                     b.Navigation("defend");
+                });
+
+            modelBuilder.Entity("server.DataAccess.entities.evolutionGroup", b =>
+                {
+                    b.Navigation("evolutions");
+
+                    b.Navigation("pokemon");
                 });
 
             modelBuilder.Entity("server.DataAccess.entities.moves", b =>

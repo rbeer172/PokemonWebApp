@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Collections.Generic;
 
 namespace server.DataAccess.entities
 {
@@ -7,6 +8,10 @@ namespace server.DataAccess.entities
     public class evolutionGroup
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id { get; set; }
+
+        public List<pokemonEvolutionGroup> pokemon { get; set; }
+        public List<evolution> evolutions { get; set; }
     }
 }

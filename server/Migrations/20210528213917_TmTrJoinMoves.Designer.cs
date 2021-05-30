@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using server.DataAccess;
 
 namespace server.Migrations
 {
     [DbContext(typeof(pokemonDataContext))]
-    partial class pokemonDataContextModelSnapshot : ModelSnapshot
+    [Migration("20210528213917_TmTrJoinMoves")]
+    partial class TmTrJoinMoves
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1142,7 +1144,7 @@ namespace server.Migrations
             modelBuilder.Entity("server.DataAccess.entities.evolution", b =>
                 {
                     b.HasOne("server.DataAccess.entities.evolutionGroup", "pokemon_evolution")
-                        .WithMany("evolutions")
+                        .WithMany()
                         .HasForeignKey("evolution_id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -1302,7 +1304,7 @@ namespace server.Migrations
             modelBuilder.Entity("server.DataAccess.entities.pokemonEvolutionGroup", b =>
                 {
                     b.HasOne("server.DataAccess.entities.evolutionGroup", "group")
-                        .WithMany("pokemon")
+                        .WithMany()
                         .HasForeignKey("group_id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -1414,13 +1416,6 @@ namespace server.Migrations
                     b.Navigation("attack");
 
                     b.Navigation("defend");
-                });
-
-            modelBuilder.Entity("server.DataAccess.entities.evolutionGroup", b =>
-                {
-                    b.Navigation("evolutions");
-
-                    b.Navigation("pokemon");
                 });
 
             modelBuilder.Entity("server.DataAccess.entities.moves", b =>

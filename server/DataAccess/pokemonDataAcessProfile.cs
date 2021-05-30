@@ -61,6 +61,8 @@ namespace server.DataAccess
 
             CreateMap<pokemonEntity, pokemon>();
             CreateMap<entities.typeEffectiveness, Domain.typeEffectiveness>();
+            CreateMap<pokemonEvolutionGroup, PokemonEvolutionGroup>();
+            CreateMap<evolutionGroup, evolutionTree>();
         }
     }
 }
