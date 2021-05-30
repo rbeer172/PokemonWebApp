@@ -24,9 +24,7 @@ namespace server.Controllers
         [HttpGet, Route("")]
         public async Task<ActionResult> getAllEvolutions()
         {
-            var result = await db.evolution_groups
-                //.Select(columns => new { ID = columns.id, Pokemon = columns.pokemon})
-                .ToListAsync();
+            var result = await db.evolution_groups.ToListAsync();
 
             return Ok(result);
         }
@@ -44,36 +42,6 @@ namespace server.Controllers
         [HttpPost, Route("")]
         public async Task<ActionResult> newEvolution([FromBody] evolutionGroup group)
         {
-            /*using (var transaction = db.Database.BeginTransaction())
-            {
-                try
-                {
-                    var groupID = new evolutionGroup { };
-                    db.evolution_groups.Add(groupID);
-                    await db.SaveChangesAsync();
-
-                    foreach (evolution evolution in tree.evolutions)
-                    {
-                        evolution.evolution_id = groupID.id;
-                        db.evolution.Add(evolution);
-                    }
-
-                    foreach (int id in tree.pokemonID)
-                    {
-                        var group = new pokemonEvolutionGroup { 
-                            pokemon_id = id,
-                            group_id = groupID.id 
-                        };
-                        db.pokemon_evolution_group.Add(group);
-                    }
-                    await db.SaveChangesAsync();
-                    transaction.Commit();
-                }
-                catch(Exception)
-                {
-                    transaction.Rollback();
-                }
-            }*/
             db.evolution_groups.Add(group);
             await db.SaveChangesAsync();
             return Ok();
