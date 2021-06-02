@@ -27,8 +27,11 @@ namespace server.Controllers
         [HttpGet, Route("")]
         public async Task<ActionResult> getAllPokemon()
         {
-            var result = await db.pokemon
-                .Select(columns => columns.pokemon_name)
+            var result = await map.ProjectTo<pokemon>(db.pokemon)
+                .Select(columns => new { 
+                    Id = columns.pokemon_id,
+                    Name = columns.pokemon_name,
+                    Type = columns.type })
                 .ToListAsync();
             return Ok(result);
         }
@@ -50,21 +53,27 @@ namespace server.Controllers
                 .Where(columns => columns.pokdex_id == pokedexID)
                 .ToListAsync();
 
-            int id = await db.pokemon
-                .Where(columns => columns.pokdex_id == pokedexID)
-                .Select(row => row.pokemon_id)
-                .FirstOrDefaultAsync();
+            var pokemonList = new List<pokemonWithEvolution>();
 
-            int evolutionId = await db.pokemon_evolution_group
-                .Where(columns => columns.pokemon_id == id)
-                .Select(row => row.group_id)
-                .FirstOrDefaultAsync();
+            for(int i = 0; i < result.Count; i++)
+            {
+                int evolutionId = await db.pokemon_evolution_group
+                    .Where(columns => columns.pokemon_id == result[i].pokemon_id)
+                    .Select(row => row.group_id)
+                    .FirstOrDefaultAsync();
 
-            var evolution = await map.ProjectTo<evolutionLine>(db.evolution
-                .Where(columns => columns.evolution_id == evolutionId))
-                .ToListAsync();
+                var evolution = await map.ProjectTo<evolutionLine>(db.evolution
+                    .Where(columns => columns.evolution_id == evolutionId))
+                    .FirstOrDefaultAsync();
 
-            return Ok(new { pokemon = result, evolutionTree = evolution });
+                var pokemon = new pokemonWithEvolution { 
+                    Pokemon = result[i],
+                    Evolution = evolution
+                };
+
+                pokemonList.Add(pokemon);
+            }
+            return Ok(pokemonList);
         }
 
         [HttpPost, Route("")]
@@ -82,6 +91,17 @@ namespace server.Controllers
         [HttpPost, Route("update")]
         public async Task<ActionResult> updatePokemon([FromBody] newPokemon pokemon)
         {
+            var result = await map.ProjectTo<pokemonEntity>(db.pokemon)
+                .Where(columns => columns.pokemon_id == pokemon.pokemon_id)
+                .FirstOrDefaultAsync();
+
+            db.pokemon_abilities.RemoveRange(result.abilities);
+            db.pokemon_types.RemoveRange(result.type);
+            db.pokemon_egg_groups.RemoveRange(result.eggGroups);
+            db.levelUpMoves.RemoveRange(result.levelUpMoves);
+            db.evolution_moves.RemoveRange(result.evolutionMoves);
+            db.tm_learned_moves.RemoveRange(result.tmMoves);
+            db.tr_learned_moves.RemoveRange(result.trMoves);
 
             var entitytoPokemon = new pokemonEntitytoPokemon(pokemon);
             var pokemonData = entitytoPokemon.convert();
