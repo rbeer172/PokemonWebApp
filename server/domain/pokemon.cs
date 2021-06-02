@@ -20,7 +20,7 @@ namespace server.Domain
         public int total { get; set; }
         public string description { get; set; }
         public List<string> type { get; set; }
-        public List<string> abilities { get; set; }
+        public List<PokemonAbilities> abilities { get; set; }
         public List<string> eggGroups { get; set; }
         public List<levelupMoves> levelUpMoves { get; set; }
         public List<evolutionMoves> evolutionMoves { get; set; }

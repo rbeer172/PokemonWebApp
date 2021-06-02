@@ -10,7 +10,7 @@ using server.DataAccess;
 namespace server.Migrations
 {
     [DbContext(typeof(pokemonDataContext))]
-    [Migration("20210530002548_evolution_group")]
+    [Migration("20210601211623_evolution_group")]
     partial class evolution_group
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -562,7 +562,7 @@ namespace server.Migrations
                         {
                             id = 2,
                             ability = "Chlorophyll",
-                            hidden = false,
+                            hidden = true,
                             pokemon_id = 1
                         },
                         new
@@ -576,7 +576,7 @@ namespace server.Migrations
                         {
                             id = 4,
                             ability = "Chlorophyll",
-                            hidden = false,
+                            hidden = true,
                             pokemon_id = 2
                         },
                         new
@@ -590,7 +590,7 @@ namespace server.Migrations
                         {
                             id = 6,
                             ability = "Chlorophyll",
-                            hidden = false,
+                            hidden = true,
                             pokemon_id = 3
                         });
                 });

@@ -560,7 +560,7 @@ namespace server.Migrations
                         {
                             id = 2,
                             ability = "Chlorophyll",
-                            hidden = false,
+                            hidden = true,
                             pokemon_id = 1
                         },
                         new
@@ -574,7 +574,7 @@ namespace server.Migrations
                         {
                             id = 4,
                             ability = "Chlorophyll",
-                            hidden = false,
+                            hidden = true,
                             pokemon_id = 2
                         },
                         new
@@ -588,7 +588,7 @@ namespace server.Migrations
                         {
                             id = 6,
                             ability = "Chlorophyll",
-                            hidden = false,
+                            hidden = true,
                             pokemon_id = 3
                         });
                 });

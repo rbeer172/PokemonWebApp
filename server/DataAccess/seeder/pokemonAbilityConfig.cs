@@ -14,37 +14,43 @@ namespace server.DataAccess.seeder
                 {
                     id = 1,
                     pokemon_id = 1,
-                    ability = "Overgrow"
+                    ability = "Overgrow",
+                    hidden = false
                 },
                 new pokemonAbilties
                 {
                     id = 2,
                     pokemon_id = 1,
-                    ability = "Chlorophyll"
+                    ability = "Chlorophyll",
+                    hidden = true
                 },
                 new pokemonAbilties
                 {
                     id = 3,
                     pokemon_id = 2,
-                    ability = "Overgrow"
+                    ability = "Overgrow",
+                    hidden = false
                 },
                 new pokemonAbilties
                 {
                     id = 4,
                     pokemon_id = 2,
-                    ability = "Chlorophyll"
+                    ability = "Chlorophyll",
+                    hidden = true
                 },
                 new pokemonAbilties
                 {
                     id = 5,
                     pokemon_id = 3,
-                    ability = "Overgrow"
+                    ability = "Overgrow",
+                    hidden = false
                 },
                 new pokemonAbilties
                 {
                     id = 6,
                     pokemon_id = 3,
-                    ability = "Chlorophyll"
+                    ability = "Chlorophyll",
+                    hidden = true
                 }
             );
         }

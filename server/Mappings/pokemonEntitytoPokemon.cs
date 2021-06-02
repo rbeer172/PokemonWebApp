@@ -46,8 +46,12 @@ namespace server.Mappings
             foreach (string typing in pokemon.type)
                 pokemonData.type.Add(new pokemonTypes { type = typing });
 
-            foreach (string _ability in pokemon.abilities)
-                pokemonData.abilities.Add(new pokemonAbilties { ability = _ability });
+            foreach (PokemonAbilities _ability in pokemon.abilities)
+                pokemonData.abilities.Add(new pokemonAbilties 
+                { 
+                    ability = _ability.ability,
+                    hidden = _ability.hidden 
+                });
 
             foreach (string _eggGroup in pokemon.eggGroups)
                 pokemonData.eggGroups.Add(new pokemonEggGroups { eggGroup = _eggGroup });
