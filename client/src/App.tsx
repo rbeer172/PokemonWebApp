@@ -1,7 +1,9 @@
 import React from 'react';
+import { Switch, Route } from 'react-router-dom';
 import { Container, Paper } from '@material-ui/core';
-import img from './src/assets/background.jpg';
-import Header from './src/Header/header';
+import img from './assets/background.jpg';
+import Header from './Header/header';
+import Home from './pages/home';
 
 const App = () => {
     return (
@@ -14,7 +16,6 @@ const App = () => {
                 height: '100%',
                 left: '0',
                 backgroundSize: 'cover',
-                padding: '20px',
             }}>
             <Container
                 component={Paper}
@@ -26,7 +27,9 @@ const App = () => {
                     padding: '0',
                 }}>
                 <Header />
-                <h1>Pokemon App</h1>
+                <Switch>
+                    <Route exact path="/" component={Home} />
+                </Switch>
             </Container>
         </div>
     );

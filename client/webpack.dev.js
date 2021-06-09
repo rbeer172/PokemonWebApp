@@ -7,7 +7,7 @@ module.exports = {
     output: {
         publicPath: '',
     },
-    entry: path.resolve(__dirname, './index.tsx'),
+    entry: path.resolve(__dirname, './src/index.tsx'),
     module: {
         rules: [
             {
@@ -51,7 +51,7 @@ module.exports = {
     },
     plugins: [
         new HtmlWebpackPlugin({
-            template: 'index.html',
+            template: './src/index.html',
             favicon: './src/assets/favicon.png',
         }),
         new ESLintPlugin({

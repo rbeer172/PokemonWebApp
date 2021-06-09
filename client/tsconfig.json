@@ -22,9 +22,7 @@
     },
     "include": [
       "src",
-      "index.tsx",
-      "App.tsx",
-      ".eslintrc.js",
       "webpack.dev.js",
-      "webpack.prod.js"]
+      "webpack.prod.js"
+    ]
 }
