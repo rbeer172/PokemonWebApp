@@ -1,37 +1,43 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
-import { Container, Paper } from '@material-ui/core';
+import { Container, Paper, Box } from '@material-ui/core';
+import { Provider } from 'react-redux';
+import store from './redux/store';
 import img from './assets/background.jpg';
-import Header from './Header/header';
+import Header from './components/Header/header';
 import Home from './pages/home';
+import Pokedex from './pages/pokedex';
 
 const App = () => {
     return (
-        <div
-            style={{
-                backgroundImage: `url(${img})`,
-                position: 'fixed',
-                top: '0',
-                width: '100%',
-                height: '100%',
-                left: '0',
-                backgroundSize: 'cover',
-            }}>
-            <Container
-                component={Paper}
-                maxWidth="lg"
+        <Provider store={store}>
+            <div
                 style={{
-                    flexDirection: 'column',
-                    background: 'grey',
-                    border: '2px solid black',
-                    padding: '0',
+                    backgroundImage: `url(${img})`,
+                    position: 'fixed',
+                    top: '0',
+                    width: '100%',
+                    height: '100%',
+                    left: '0',
+                    backgroundSize: 'cover',
                 }}>
-                <Header />
-                <Switch>
-                    <Route exact path="/" component={Home} />
-                </Switch>
-            </Container>
-        </div>
+                <Container
+                    component={Paper}
+                    maxWidth="lg"
+                    style={{
+                        flexDirection: 'column',
+                        padding: '0',
+                    }}>
+                    <Header />
+                    <Box padding="20px">
+                        <Switch>
+                            <Route exact path="/" component={Home} />
+                            <Route exact path="/pokedex" component={Pokedex} />
+                        </Switch>
+                    </Box>
+                </Container>
+            </div>
+        </Provider>
     );
 };
 export default App;

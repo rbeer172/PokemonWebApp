@@ -1,4 +1,3 @@
-
 module.exports = {
     semi: true,
     trailingComma: 'es5',
@@ -6,5 +5,5 @@ module.exports = {
     tabWidth: 4,
     bracketSpacing: true,
     jsxBracketSameLine: true,
-    endOfLine:"auto"
-  }
+    endOfLine: 'auto',
+};

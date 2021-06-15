@@ -2,7 +2,8 @@ import styled from 'styled-components';
 import { Button, TextField } from '@material-ui/core';
 
 export const Divider = styled.div`
-    margin-top: 75px;
+    margin-top: 300px;
+    padding-bottom: 100px;
 `;
 
 export const NavLink = styled(Button)`

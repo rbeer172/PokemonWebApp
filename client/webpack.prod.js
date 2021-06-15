@@ -9,7 +9,7 @@ module.exports = {
         filename: '[name].[contenthash].js',
         publicPath: '',
     },
-    entry: path.resolve(__dirname, './index.tsx'),
+    entry: path.resolve(__dirname, './src/index.tsx'),
     module: {
         rules: [
             {
@@ -32,12 +32,13 @@ module.exports = {
                 },
             },
             {
-                test: /\.jpg|\.png$/,
+                test: /\.(png|svg|jpg|gif)$/,
                 use: {
                     loader: 'file-loader',
                     options: {
-                        outputPath: path.join('..', 'assets'),
-                        publicPath: '/assets',
+                        name: '[name].[ext]',
+                        publicPath: 'assets',
+                        outputPath: 'assets',
                     },
                 },
             },
@@ -53,6 +54,7 @@ module.exports = {
     plugins: [
         new HtmlWebpackPlugin({
             template: 'index.html',
+            favicon: './src/assets/favicon.png',
         }),
         new ESLintPlugin({
             extensions: ['js', 'jsx', 'ts', 'tsx'],
