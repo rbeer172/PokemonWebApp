@@ -10,7 +10,7 @@ using server.DataAccess;
 namespace server.Migrations
 {
     [DbContext(typeof(pokemonDataContext))]
-    [Migration("20210601211623_evolution_group")]
+    [Migration("20210616053456_evolution_group")]
     partial class evolution_group
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
