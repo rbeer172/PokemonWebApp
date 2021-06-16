@@ -40,8 +40,8 @@ module.exports = {
                     loader: 'file-loader',
                     options: {
                         name: '[name].[ext]',
-                        publicPath: 'js/js/assets',
-                        outputPath: 'js/js/assets',
+                        publicPath: 'js/assets',
+                        outputPath: 'assets',
                     },
                 },
             },

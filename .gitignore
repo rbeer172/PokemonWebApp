@@ -461,3 +461,4 @@ database/evolution.sql
 *.jpg
 *.png
 server/Views/SPA/js/
+server/appsettings.json
