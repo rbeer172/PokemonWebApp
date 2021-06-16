@@ -2,10 +2,15 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ESLintPlugin = require('eslint-webpack-plugin');
 
+const outputPath = path.resolve('..', 'server', 'Views', 'Spa');
+
 module.exports = {
     mode: 'development',
     output: {
-        publicPath: '',
+        pathinfo: true,
+        path: path.resolve(outputPath, 'js'),
+        filename: '[name].js',
+        publicPath: '/js',
     },
     entry: path.resolve(__dirname, './src/index.tsx'),
     module: {
@@ -35,8 +40,8 @@ module.exports = {
                     loader: 'file-loader',
                     options: {
                         name: '[name].[ext]',
-                        publicPath: 'assets',
-                        outputPath: 'assets',
+                        publicPath: 'js/assets',
+                        outputPath: 'js/assets',
                     },
                 },
             },
@@ -51,6 +56,7 @@ module.exports = {
     },
     plugins: [
         new HtmlWebpackPlugin({
+            filename: path.resolve(outputPath, 'index.html'),
             template: './src/index.html',
             favicon: './src/assets/favicon.png',
         }),

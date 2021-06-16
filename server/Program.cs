@@ -21,6 +21,7 @@ namespace server
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
+                    webBuilder.UseWebRoot("Views/SPA");
                 });
     }
 }
