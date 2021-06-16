@@ -14,14 +14,14 @@ const slice = createSlice({
     initialState,
     reducers: {
         Add: (state, { payload }: PayloadAction<Pokemon>) => {
-            state.Pokemon[payload.Name] = payload;
+            state.Pokemon[payload.name] = payload;
         },
         Delete: (state, { payload }: PayloadAction<string>) => {
             delete state.Pokemon[payload];
         },
         AddMany: (state, { payload }: PayloadAction<Array<Pokemon>>) => {
             payload.forEach((pokemon) => {
-                state.Pokemon[pokemon.Name] = pokemon;
+                state.Pokemon[pokemon.name] = pokemon;
             });
         },
         DeleteMany: (state, { payload }: PayloadAction<Array<string>>) => {

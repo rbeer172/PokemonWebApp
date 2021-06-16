@@ -9,13 +9,13 @@ import Typings from '../typings';
 const PokemonCard = ({ data }: { data: Pokemon }) => (
     <StyledCard>
         <CardActionArea>
-            <NavLink to={`/pokedex/${data.Name}`}>
+            <NavLink to={`/pokedex/${data.name}`}>
                 <CardMedia
                     component="img"
-                    src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${data.Id}.png`}
+                    src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${data.id}.png`}
                     title="pokemon"
                 />
-                <Title variant="h6">{data.Name}</Title>
+                <Title variant="h6">{data.name}</Title>
             </NavLink>
         </CardActionArea>
         <Grid container item direction="row" spacing={1}>
@@ -24,12 +24,13 @@ const PokemonCard = ({ data }: { data: Pokemon }) => (
                     <Grid
                         container
                         item
-                        xs={data.Type.length === 1 ? 12 : 6}
+                        key={type}
+                        xs={data.type.length === 1 ? 12 : 6}
                         justify="center">
                         <Typings name={type} />
                     </Grid>
                 ),
-                data.Type
+                data.type
             )}
         </Grid>
     </StyledCard>

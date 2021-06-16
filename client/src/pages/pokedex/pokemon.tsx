@@ -14,7 +14,7 @@ const Pokedex = () => {
     //     { Id: 5, Name: 'charmeleon', Type: ['fire'] },
     //     { Id: 6, Name: 'charizard', Type: ['fire', 'flying'] },
     // ];
-    const list = useDispatchSelector(loadPokemonList, 'PokemonList');
+    const list = useDispatchSelector(loadPokemonList, 'pokemonList[Pokemon]');
     return (
         <Grid container item spacing={6}>
             {map(
@@ -23,6 +23,7 @@ const Pokedex = () => {
                         container
                         item
                         xs={2}
+                        key={data.name}
                         alignItems="center"
                         direction="column">
                         <PokemonCard data={data} />
