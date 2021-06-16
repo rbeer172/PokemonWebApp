@@ -460,3 +460,4 @@ database/tr.sql
 database/evolution.sql
 *.jpg
 *.png
+server/Views/SPA/js/
