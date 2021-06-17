@@ -64,11 +64,11 @@ namespace server.Controllers
 
                 var evolution = await map.ProjectTo<evolutionLine>(db.evolution
                     .Where(columns => columns.evolution_id == evolutionId))
-                    .FirstOrDefaultAsync();
+                    .ToListAsync();
 
                 var pokemon = new pokemonWithEvolution { 
                     Pokemon = result[i],
-                    Evolution = evolution
+                    EvolutionTree = evolution
                 };
 
                 pokemonList.Add(pokemon);
