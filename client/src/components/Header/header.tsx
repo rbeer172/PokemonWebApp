@@ -5,6 +5,8 @@ import { map } from 'lodash/fp';
 import { useHistory } from 'react-router-dom';
 import { NavLink, Logo, SearchBox, FlexGrowDiv } from './styles';
 import logo from '../../assets/pokeball.png';
+import loadPokemonList from '../../redux/thunks/loadPokemonList';
+import useDispatchSelector from '../../hooks/useDispatchSelector';
 
 // <TextField {...params} label="freeSolo" margin="normal" variant="outlined" />
 /* <div ref={params.InputProps.ref}>
@@ -20,7 +22,8 @@ const Header = () => {
     const history = useHistory();
     const goHome = () => history.push('/');
     const goToPokedex = () => history.push('/pokedex');
-    const pokemon = ['bulbasaur', 'ivysaur', 'venusaur'];
+    const goToPokemonPage = (name: string) => history.push(`/pokedex/${name}`);
+    const list = useDispatchSelector(loadPokemonList, 'pokemonList[Pokemon]');
     return (
         <>
             <AppBar position="relative">
@@ -47,10 +50,10 @@ const Header = () => {
                         id="free-solo-demo"
                         freeSolo
                         size="small"
-                        onChange={(e, value, reason) =>
-                            reason !== 'clear' ? alert(value) : false
+                        onChange={(e, value: string, reason) =>
+                            reason !== 'clear' ? goToPokemonPage(value) : false
                         }
-                        options={map((name) => name, pokemon)}
+                        options={map((pokemon) => pokemon.name, list)}
                         renderInput={(params) => (
                             <SearchBox
                                 {...params}

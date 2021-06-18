@@ -1,3 +1,3 @@
-import Pokedex from './pokemon';
+import Pokedex from './pokedex';
 
 export default Pokedex;

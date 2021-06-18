@@ -1,9 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect } from 'react';
-// import { ThunkAction, AnyAction } from '@reduxjs/toolkit';
 import { get } from 'lodash/fp';
 import { useAppDispatch, useAppSelector } from './reduxHooks';
-// import { RootState } from '../redux/store';
 
 const useDispatchAction = (
     action: any,
@@ -14,7 +12,7 @@ const useDispatchAction = (
 
     useEffect(() => {
         dispatch(action(search));
-    }, [action, dispatch, search]);
+    }, [search, action, dispatch]);
 
     return useAppSelector(get(id));
 };
