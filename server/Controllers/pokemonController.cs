@@ -43,7 +43,34 @@ namespace server.Controllers
                 .Where(columns => columns.pokdex_id == pokedexID)
                 .ToListAsync();
 
-            return Ok(result);
+            var pokemonList = new List<Object>();
+
+            for (int i = 0; i < result.Count; i++)
+            {
+                var typeMultiplier = await map.ProjectTo<PokemonTypeEffectivnees>(db.type_effectiveness
+                    .Where(columns => columns.defending_type == result[i].type[0]))
+                    .OrderBy(columns => columns.attacking_type)
+                    .ToListAsync();
+
+                if(result[i].type.Count > 1)
+                {
+                    var tempMultiplier = await map.ProjectTo<PokemonTypeEffectivnees>(db.type_effectiveness
+                    .Where(columns => columns.defending_type == result[i].type[1]))
+                    .OrderBy(columns => columns.attacking_type)
+                    .ToListAsync();
+
+                    for (int j = 0; j < typeMultiplier.Count; j++)
+                    {
+                        typeMultiplier[j].multiplier *= tempMultiplier[j].multiplier;
+                    }
+                }
+
+                result[i].effectiveness = typeMultiplier;
+                var pokemon = new { Pokemon = result[i] };
+
+                pokemonList.Add(pokemon);
+            }
+                return Ok(pokemonList);
         }
 
         [HttpGet, Route("evolution/{pokedexID}")]
@@ -57,6 +84,24 @@ namespace server.Controllers
 
             for(int i = 0; i < result.Count; i++)
             {
+                var typeMultiplier = await map.ProjectTo<PokemonTypeEffectivnees>(db.type_effectiveness
+                    .Where(columns => columns.defending_type == result[i].type[0]))
+                    .OrderBy(columns => columns.attacking_type)
+                    .ToListAsync();
+
+                if (result[i].type.Count > 1)
+                {
+                    var tempMultiplier = await map.ProjectTo<PokemonTypeEffectivnees>(db.type_effectiveness
+                    .Where(columns => columns.defending_type == result[i].type[1]))
+                    .OrderBy(columns => columns.attacking_type)
+                    .ToListAsync();
+
+                    for (int j = 0; j < typeMultiplier.Count; j++)
+                    {
+                        typeMultiplier[j].multiplier *= tempMultiplier[j].multiplier;
+                    }
+                }
+
                 int evolutionId = await db.pokemon_evolution_group
                     .Where(columns => columns.pokemon_id == result[i].pokemon_id)
                     .Select(row => row.group_id)
@@ -66,6 +111,7 @@ namespace server.Controllers
                     .Where(columns => columns.evolution_id == evolutionId))
                     .ToListAsync();
 
+                result[i].effectiveness = typeMultiplier;
                 var pokemon = new pokemonWithEvolution { 
                     Pokemon = result[i],
                     EvolutionTree = evolution

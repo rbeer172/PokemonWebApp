@@ -56,13 +56,13 @@ namespace server.DataAccess
 
             model.Entity<typeEffectiveness>()
                 .HasOne(pt => pt.attack)
-                .WithOne()
-                .HasForeignKey<typeEffectiveness>(pt => pt.attacking_type)
+                .WithMany()
+                .HasForeignKey(pt => pt.attacking_type)
                 .OnDelete(DeleteBehavior.Restrict);
             model.Entity<typeEffectiveness>()
                 .HasOne(pt => pt.defend)
-                .WithOne()
-                .HasForeignKey<typeEffectiveness>(pt => pt.defending_type)
+                .WithMany()
+                .HasForeignKey(pt => pt.defending_type)
                 .OnDelete(DeleteBehavior.Restrict);
 
             model.ApplyConfiguration(new accuracyConfig());
@@ -87,6 +87,7 @@ namespace server.DataAccess
             model.ApplyConfiguration(new evolutionGroupsConfig());
             model.ApplyConfiguration(new evolutionConfig());
             model.ApplyConfiguration(new pokemonEvolutionGroupConfig());
+            model.ApplyConfiguration(new typeEffectivenessConfig());
         }
     }
 }

@@ -27,5 +27,6 @@ namespace server.Domain
         public List<eggMoves> eggMoves { get; set; }
         public List<tmMoves> tmMoves { get; set; }
         public List<trMoves> trMoves { get; set; }
+        public List<PokemonTypeEffectivnees> effectiveness { get; set; }
     }
 }
