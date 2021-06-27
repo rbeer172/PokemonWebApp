@@ -23,13 +23,11 @@ module.exports = {
         'plugin:prettier/recommended',
     ],
     rules: {
-        'no-unused-expressions': [
-            'error',
-            { allowShortCircuit: true, allowTernary: true },
-        ],
+        'no-unused-expressions': ['error', { allowShortCircuit: true, allowTernary: true }],
         '@typescript-eslint/no-unused-vars': ['error'],
         '@typescript-eslint/no-var-requires': 'off',
         'react/prop-types': 'off',
+        'react/require-default-props': 'off',
         'react/jsx-uses-react': 'off',
         'react/react-in-jsx-scope': 'off',
         '@typescript-eslint/explicit-module-boundary-types': 'off',

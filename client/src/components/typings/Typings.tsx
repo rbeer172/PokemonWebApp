@@ -2,7 +2,7 @@ import React from 'react';
 import { Paper } from '@material-ui/core';
 import { Type } from './styles';
 
-const Typings = ({ name }: { name: string }) => {
+const Typings = ({ name, size }: { name: string; size?: string }) => {
     const switchColor = () => {
         switch (name) {
             case 'normal':
@@ -47,7 +47,7 @@ const Typings = ({ name }: { name: string }) => {
     };
 
     return (
-        <Type component={Paper} color={switchColor()}>
+        <Type component={Paper} color={switchColor()} size={size}>
             {name}
         </Type>
     );

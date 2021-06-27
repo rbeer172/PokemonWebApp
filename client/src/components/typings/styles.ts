@@ -2,12 +2,31 @@
 import styled from 'styled-components';
 import { Box } from '@material-ui/core';
 
-export const Type = styled(Box)`
+const handleSize = (size?: string) => {
+    switch (size) {
+        case 'normal':
+            return `    
+                padding: 5px;
+                width: 62px;
+                font-size: 13px;`;
+        case 'small':
+            return `    
+                padding: 5px;
+                width: 55px;
+                font-size: 11px;`;
+        default:
+            return `    
+                padding: 5px;
+                width: 62px;
+                font-size: 13px;`;
+    }
+};
+
+export const Type = styled(Box)<{ size?: string }>`
     background-color: ${(props) => props.color};
-    padding: 5px;
-    width: 62px;
     text-align: center;
     text-transform: uppercase;
     color: white;
-    font-size: 13px;
+    font-weight: bold;
+    ${(props) => handleSize(props.size)};
 `;
