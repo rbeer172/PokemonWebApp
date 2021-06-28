@@ -49,7 +49,7 @@ namespace server.Mappings
             foreach (PokemonAbilities _ability in pokemon.abilities)
                 pokemonData.abilities.Add(new pokemonAbilties 
                 { 
-                    ability = _ability.ability,
+                    ability = _ability.name,
                     hidden = _ability.hidden 
                 });
 

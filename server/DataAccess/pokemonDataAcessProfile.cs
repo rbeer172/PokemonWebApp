@@ -14,7 +14,10 @@ namespace server.DataAccess
         {
             CreateMap<pokemonTypes, string>().ConvertUsing(a => a.type);
             CreateMap<pokemonEggGroups, string>().ConvertUsing(a => a.eggGroup);
-            CreateMap<pokemonAbilties, PokemonAbilities>();
+            CreateMap<pokemonAbilties, PokemonAbilities>()
+                .ForMember(domain => domain.name, value => value.MapFrom(db => db.ability))
+                .ForMember(domain => domain.hidden, value => value.MapFrom(db => db.hidden))
+                .ForMember(domain => domain.description, value => value.MapFrom(db => db.pokemon_ability.description));
 
             CreateMap<levelupLearnedMoves, levelupMoves>()
                 .ForMember(domain => domain.Level, value => value.MapFrom(db => db.level))

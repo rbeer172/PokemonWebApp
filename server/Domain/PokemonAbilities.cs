@@ -7,7 +7,8 @@ namespace server.Domain
 {
     public class PokemonAbilities
     {
-        public string ability { get; set; }
+        public string name { get; set; }
         public bool hidden { get; set; }
+        public string description { get; set; }
     }
 }
