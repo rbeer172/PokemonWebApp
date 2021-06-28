@@ -20,7 +20,7 @@ namespace server.DataAccess.entities
         [Required]
         public float weight { get; set; }
         [Required]
-        public string growth_rate { get; set; }
+        public int max_exp { get; set; }
         [Required]
         public int hp { get; set; }
         [Required]

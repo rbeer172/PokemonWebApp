@@ -10,7 +10,7 @@ namespace server.Domain
         public string species { get; set; }
         public float height { get; set; }
         public float weight { get; set; }
-        public string growth_rate { get; set; }
+        public int max_exp { get; set; }
         public int hp { get; set; }
         public int attack { get; set; }
         public int defense { get; set; }

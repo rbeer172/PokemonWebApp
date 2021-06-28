@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using server.DataAccess;
 
 namespace server.Migrations
 {
     [DbContext(typeof(pokemonDataContext))]
-    partial class pokemonDataContextModelSnapshot : ModelSnapshot
+    [Migration("20210628211412_MaxExp")]
+    partial class MaxExp
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

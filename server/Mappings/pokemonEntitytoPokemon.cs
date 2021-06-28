@@ -24,7 +24,7 @@ namespace server.Mappings
                 species = pokemon.species,
                 height = pokemon.height,
                 weight = pokemon.weight,
-                growth_rate = pokemon.growth_rate,
+                max_exp = pokemon.max_exp,
                 hp = pokemon.hp,
                 attack = pokemon.attack,
                 defense = pokemon.defense,
