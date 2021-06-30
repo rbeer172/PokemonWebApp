@@ -29,4 +29,6 @@ export const Type = styled(Box)<{ size?: string }>`
     color: white;
     font-weight: bold;
     ${(props) => handleSize(props.size)};
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell,
+        'Open Sans', 'Helvetica Neue', sans-serif;
 `;

@@ -22,21 +22,16 @@ const Header = () => {
     const history = useHistory();
     const goHome = () => history.push('/');
     const goToPokedex = () => history.push('/pokedex');
-    const goToPokemonPage = (name: string) => history.push(`/pokedex/${name}`);
+    const goToPokemonPage = (name: string | null) => history.push(`/pokedex/${name}`);
     const list = useDispatchSelector(loadPokemonList, 'pokemonList[Pokemon]');
     return (
         <>
             <AppBar position="relative">
-                <Grid
-                    container
-                    alignItems="center"
-                    style={{ padding: '0px 20px 0px 20px' }}>
+                <Grid container alignItems="center" style={{ padding: '0px 20px 0px 20px' }}>
                     <FlexGrowDiv>
                         <NavLink onClick={goHome}>
                             <Logo src={logo} alt="logo" />
-                            <Typography
-                                variant="h6"
-                                style={{ padding: '10px' }}>
+                            <Typography variant="h6" style={{ padding: '10px' }}>
                                 Pokemon App
                             </Typography>
                         </NavLink>
@@ -50,7 +45,7 @@ const Header = () => {
                         id="free-solo-demo"
                         freeSolo
                         size="small"
-                        onChange={(e, value: string, reason) =>
+                        onChange={(e, value: string | null, reason) =>
                             reason !== 'clear' ? goToPokemonPage(value) : false
                         }
                         options={map((pokemon) => pokemon.name, list)}

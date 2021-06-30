@@ -1,9 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit';
 import pokemonList from './reducers/pokemonList';
+import pokemonData from './reducers/pokemonData';
 
 const store = configureStore({
     reducer: {
         pokemonList,
+        pokemonData,
     },
 });
 
