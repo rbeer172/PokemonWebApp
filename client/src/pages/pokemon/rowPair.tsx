@@ -3,7 +3,7 @@ import { TableRow } from '@material-ui/core';
 import { Key, Value } from './styles';
 
 interface Props {
-    name: string | ReactElement;
+    name: string;
     value: string | number | Array<string> | (() => string | number) | ReactElement;
 }
 

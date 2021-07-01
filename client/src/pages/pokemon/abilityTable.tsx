@@ -8,10 +8,11 @@ const AbilityTable = ({ data }: { data: PokemonData['pokemon'] }) => {
     return (
         <Table size="small">
             <TableHeader name="Abilities" colSpan={2} />
-            <TableBody>
+            <TableBody key="ability">
                 {map(
                     (ability) => (
                         <RowPair
+                            key={ability.name}
                             name={
                                 ability.hidden === true
                                     ? `${ability.name} (hidden):`

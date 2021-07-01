@@ -27,6 +27,7 @@ const App = () => {
                     height: '100%',
                     left: '0',
                     backgroundSize: 'cover',
+                    overflowY: 'scroll',
                 }}>
                 <Container component={Paper} maxWidth="lg" style={{ padding: '0' }}>
                     <Header />

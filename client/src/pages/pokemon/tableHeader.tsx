@@ -16,7 +16,7 @@ const TableHeader = ({ name, columns, colSpan, padding }: Props) => (
             <></>
         ) : (
             <TableRow>
-                <TableCell colSpan={colSpan} padding={padding}>
+                <TableCell key={name} colSpan={colSpan} padding={padding}>
                     <Title variant="h5">{name}</Title>
                 </TableCell>
             </TableRow>
@@ -27,7 +27,9 @@ const TableHeader = ({ name, columns, colSpan, padding }: Props) => (
             <TableRow>
                 {map(
                     (element: string) => (
-                        <Key align="center">{element}</Key>
+                        <Key key={element} align="center">
+                            {element}
+                        </Key>
                     ),
                     isArray(columns) ? columns : keys(columns)
                 )}

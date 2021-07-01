@@ -1,6 +1,7 @@
 import React from 'react';
 import { map, chunk, sortBy, indexOf, flow } from 'lodash/fp';
 import { Table, TableBody, TableRow, TableCell } from '@material-ui/core';
+import Grid from '@material-ui/core/Grid';
 import Typings from '../../components/typings';
 import { TypeWeakness } from './styles';
 import TableHeader from './tableHeader';
@@ -27,19 +28,21 @@ const EffectivenessTable = ({ data, columns }: Props) => {
             <TableHeader name="Type Weakness" colSpan={columns} />
             <TableBody>
                 {map(
-                    (row: any) => (
-                        <TableRow>
+                    (row: Array<PokemonTypeEffectiveness>) => (
+                        <TableRow key={`${row[0].attacking_type}-outer`}>
                             {map(
                                 (cell) => (
-                                    <TableCell style={{ padding: '1px' }}>
-                                        <TableRow>
+                                    <TableCell
+                                        key={`${cell.attacking_type}-inner`}
+                                        style={{ padding: '1px' }}>
+                                        <Grid item>
                                             <Typings name={cell.attacking_type} size="small" />
-                                        </TableRow>
-                                        <TableRow>
+                                        </Grid>
+                                        <Grid item>
                                             <TypeWeakness multiplier={cell.multiplier}>
                                                 {decimalToFraction(cell.multiplier)}
                                             </TypeWeakness>
-                                        </TableRow>
+                                        </Grid>
                                     </TableCell>
                                 ),
                                 row
