@@ -22,19 +22,19 @@ const MoveTables = ({ data }: { data: PokemonData['pokemon'] }) => {
                     <Tab label="Evolution" />
                 </Tabs>
             </AppBar>
-            <div hidden={value !== 0}>
+            <div hidden={value !== 0} style={{ width: '100%' }}>
                 <SortedTable data={data.levelUpMoves} />
             </div>
-            <div hidden={value !== 1}>
+            <div hidden={value !== 1} style={{ width: '100%' }}>
                 <SortedTable data={data.tmMoves} />
             </div>
-            <div hidden={value !== 2}>
+            <div hidden={value !== 2} style={{ width: '100%' }}>
                 <SortedTable data={data.trMoves} />
             </div>
-            <div hidden={value !== 3}>
+            <div hidden={value !== 3} style={{ width: '100%' }}>
                 <SortedTable data={data.eggMoves} />
             </div>
-            <div hidden={value !== 4}>
+            <div hidden={value !== 4} style={{ width: '100%' }}>
                 <SortedTable data={data.evolutionMoves} />
             </div>
         </>

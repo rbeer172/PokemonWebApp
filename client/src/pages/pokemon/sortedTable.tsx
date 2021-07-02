@@ -22,7 +22,7 @@ const SortedTable = ({ name, data }: Props) => {
         setSortedKey(key);
     };
     return (
-        <Table size="small">
+        <Table>
             <TableHead>
                 {isUndefined(name) ? (
                     <></>

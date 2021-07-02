@@ -21,16 +21,16 @@ const Pokemon = () => {
                 {data.pokemon.description}
             </Typography>
             <Grid container item spacing={0} direction="row" alignItems="center">
-                <Grid item xs={3}>
+                <Grid item xs={4} style={{ minWidth: 'max-content' }}>
                     <img
                         src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${data.pokemon.pokdex_id}.png`}
                         alt="pokemon"
-                        width="350px"
-                        height="350px"
+                        width="400px"
+                        height="400px"
                     />
                 </Grid>
-                <Grid container item xs={9}>
-                    <Grid container item style={{ marginLeft: '40px' }}>
+                <Grid container item xs={8}>
+                    <Grid container item>
                         <Grid container item xs={12}>
                             <DexTable data={data.pokemon} />
                         </Grid>

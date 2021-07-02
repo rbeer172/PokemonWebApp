@@ -1,7 +1,7 @@
 import React from 'react';
-import { Table, TableBody, TableRow, TableCell, Typography } from '@material-ui/core';
+import { Table, TableBody, TableRow, TableCell } from '@material-ui/core';
 import { map, get } from 'lodash/fp';
-import { Title, StatBar, Key } from './styles';
+import { StatBar, Key, Cell } from './styles';
 import TableHeader from './tableHeader';
 
 const StatTable = ({ data }: { data: PokemonData['pokemon'] }) => {
@@ -17,9 +17,7 @@ const StatTable = ({ data }: { data: PokemonData['pokemon'] }) => {
                             <Key align="right" width="22%">
                                 {stat.replace('_', ' ')}
                             </Key>
-                            <TableCell width="6%">
-                                <Typography align="center">{get(stat, data)}</Typography>
-                            </TableCell>
+                            <Cell width="6%">{get(stat, data)}</Cell>
                             <TableCell>
                                 <StatBar
                                     variant="determinate"
@@ -32,11 +30,7 @@ const StatTable = ({ data }: { data: PokemonData['pokemon'] }) => {
                     stats
                 )}
                 <TableRow>
-                    <TableCell colSpan={2} padding="none">
-                        <Title align="center" variant="h6">
-                            {`Total: ${get('total', data)}`}
-                        </Title>
-                    </TableCell>
+                    <Key align="center" colSpan={2}>{`Total: ${get('total', data)}`}</Key>
                 </TableRow>
             </TableBody>
         </Table>

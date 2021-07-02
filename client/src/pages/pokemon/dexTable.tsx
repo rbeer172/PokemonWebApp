@@ -29,12 +29,12 @@ const DexTable = ({ data }: { data: PokemonData['pokemon'] }) => {
                 <TableRow>
                     <Cell>{formatId(data.pokdex_id)}</Cell>
                     <Cell>{`${data.species} Pokemon`}</Cell>
-                    <Cell>
-                        <Grid container direction="row">
+                    <Cell width="17%">
+                        <Grid container direction="row" spacing={1}>
                             {map(
                                 (type) => (
-                                    <Grid item xs={5} key={type}>
-                                        <Typings name={type} />
+                                    <Grid item xs={6} key={type} style={{ width: 'max-content' }}>
+                                        <Typings name={type} size="small" />
                                     </Grid>
                                 ),
                                 data.type
@@ -45,7 +45,7 @@ const DexTable = ({ data }: { data: PokemonData['pokemon'] }) => {
                     <Cell>{`${data.weight} kg`}</Cell>
                     <Cell>{numWithCommas(data.max_exp)}</Cell>
                     <Cell>
-                        <Grid container item direction="row" spacing={1}>
+                        <Grid container item direction="row">
                             {map(
                                 (group) => (
                                     <Grid container item xs={6} key={group}>
