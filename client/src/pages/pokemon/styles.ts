@@ -1,6 +1,7 @@
 /* eslint-disable import/prefer-default-export */
 import styled from 'styled-components';
-import { TableCell, Typography, LinearProgress } from '@material-ui/core';
+import { TableCell, Typography, LinearProgress, TableSortLabel } from '@material-ui/core';
+import { ReactNode } from 'react';
 
 const handleWeakness = (weakness?: number) => {
     switch (weakness) {
@@ -23,6 +24,14 @@ const statBarColor = (stat: number) => {
     if (stat >= 80 && stat < 120) return `#4ee221`;
     if (stat >= 120) return `#10a0a0`;
     return 'gray';
+};
+
+const handleText = (child?: string | number | ReactNode) => {
+    if (typeof child === 'string') {
+        if (child.length > 20) return false;
+    }
+    if (typeof child === 'number') return true;
+    return true;
 };
 
 export const Key = styled(TableCell).attrs({
@@ -49,11 +58,21 @@ export const Value = styled(TableCell).attrs({
 
 export const Cell = styled(TableCell).attrs({
     size: 'small',
-    align: 'center',
+    padding: 'none',
 })`
+    text-transform: ${(props) => (handleText(props.children) ? 'capitalize' : 'none')};
+    white-space: ${(props) => (handleText(props.children) ? 'nowrap' : 'normal')};
+    text-align: ${(props) => (handleText(props.children) ? 'center' : 'start')};
     font-size: 16px;
+    padding: 5px;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell,
         'Open Sans', 'Helvetica Neue', sans-serif;
+`;
+
+export const SortHeader = styled(TableSortLabel).attrs({
+    active: true,
+})`
+    margin-left: 15px;
 `;
 
 export const TypeWeakness = styled(Typography)<{ multiplier?: number }>`

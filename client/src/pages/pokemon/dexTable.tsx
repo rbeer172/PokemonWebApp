@@ -1,7 +1,7 @@
 import React from 'react';
 import { map } from 'lodash/fp';
 import Grid from '@material-ui/core/Grid';
-import { Table, TableBody, TableRow, TableCell } from '@material-ui/core';
+import { Table, TableBody, TableRow } from '@material-ui/core';
 import Typings from '../../components/typings';
 import { Cell } from './styles';
 import TableHeader from './tableHeader';
@@ -29,18 +29,18 @@ const DexTable = ({ data }: { data: PokemonData['pokemon'] }) => {
                 <TableRow>
                     <Cell>{formatId(data.pokdex_id)}</Cell>
                     <Cell>{`${data.species} Pokemon`}</Cell>
-                    <TableCell size="small">
-                        <Grid container item direction="row">
+                    <Cell>
+                        <Grid container direction="row">
                             {map(
                                 (type) => (
-                                    <Grid container item xs={6} key={type}>
+                                    <Grid item xs={5} key={type}>
                                         <Typings name={type} />
                                     </Grid>
                                 ),
                                 data.type
                             )}
                         </Grid>
-                    </TableCell>
+                    </Cell>
                     <Cell>{`${data.height} m`}</Cell>
                     <Cell>{`${data.weight} kg`}</Cell>
                     <Cell>{numWithCommas(data.max_exp)}</Cell>
