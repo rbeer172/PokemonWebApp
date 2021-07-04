@@ -21,7 +21,7 @@ const Pokemon = () => {
                 {data.pokemon.description}
             </Typography>
             <Grid container item spacing={0} direction="row" alignItems="center">
-                <Grid item xs={4} style={{ minWidth: 'max-content' }}>
+                <Grid container item lg={4} md={12} justify="center">
                     <img
                         src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${data.pokemon.pokdex_id}.png`}
                         alt="pokemon"
@@ -29,20 +29,20 @@ const Pokemon = () => {
                         height="400px"
                     />
                 </Grid>
-                <Grid container item xs={8}>
+                <Grid container item lg={8} md={12}>
                     <Grid container item>
-                        <Grid container item xs={12}>
+                        <Grid container item lg={12}>
                             <DexTable data={data.pokemon} />
                         </Grid>
-                        <Grid container item xs={12}>
+                        <Grid container item lg={12}>
                             <AbilityTable data={data.pokemon} />
                         </Grid>
                     </Grid>
                 </Grid>
-                <Grid container item xs={7}>
+                <Grid container item lg={7} md={7}>
                     <StatTable data={data.pokemon} />
                 </Grid>
-                <Grid container item xs={5} justify="center">
+                <Grid container item lg={5} md={5} justify="center">
                     <EffectivenessTable data={data.pokemon} columns={6} />
                 </Grid>
                 <Grid container item xs={12} justify="center">

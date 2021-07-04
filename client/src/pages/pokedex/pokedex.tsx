@@ -13,7 +13,10 @@ const Pokedex = () => {
                     <Grid
                         container
                         item
-                        xs={2}
+                        lg={2}
+                        md={2}
+                        sm={3}
+                        xs={5}
                         key={data.name}
                         alignItems="center"
                         direction="column">

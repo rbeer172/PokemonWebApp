@@ -10,6 +10,6 @@ export const Title = styled(Typography)`
 
 export const StyledCard = styled(Card)`
     padding: 10px;
-    min-width: 150px;
+    min-width: 130px;
     background-color: gray;
 `;

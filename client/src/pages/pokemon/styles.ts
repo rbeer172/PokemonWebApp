@@ -96,3 +96,7 @@ export const StatBar = styled(LinearProgress)<{ stat: number }>`
         background-color: ${(props) => statBarColor(props.stat)};
     }
 `;
+
+export const TabContent = styled.div`
+    width: 100%;
+`;

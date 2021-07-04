@@ -30,10 +30,17 @@ const DexTable = ({ data }: { data: PokemonData['pokemon'] }) => {
                     <Cell>{formatId(data.pokdex_id)}</Cell>
                     <Cell>{`${data.species} Pokemon`}</Cell>
                     <Cell width="17%">
-                        <Grid container direction="row" spacing={1}>
+                        <Grid container item direction="row" spacing={1}>
                             {map(
                                 (type) => (
-                                    <Grid item xs={6} key={type} style={{ width: 'max-content' }}>
+                                    <Grid
+                                        container
+                                        item
+                                        lg={6}
+                                        md={4}
+                                        sm={6}
+                                        key={type}
+                                        justify="center">
                                         <Typings name={type} size="small" />
                                     </Grid>
                                 ),
@@ -45,10 +52,17 @@ const DexTable = ({ data }: { data: PokemonData['pokemon'] }) => {
                     <Cell>{`${data.weight} kg`}</Cell>
                     <Cell>{numWithCommas(data.max_exp)}</Cell>
                     <Cell>
-                        <Grid container item direction="row">
+                        <Grid container item direction="row" alignContent="center">
                             {map(
                                 (group) => (
-                                    <Grid container item xs={6} key={group}>
+                                    <Grid
+                                        container
+                                        item
+                                        lg={6}
+                                        md={4}
+                                        sm={6}
+                                        key={group}
+                                        justify="center">
                                         {group}
                                     </Grid>
                                 ),
