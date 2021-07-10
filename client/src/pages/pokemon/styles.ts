@@ -1,6 +1,6 @@
-/* eslint-disable import/prefer-default-export */
 import styled from 'styled-components';
-import { TableCell, Typography, LinearProgress, TableSortLabel } from '@material-ui/core';
+import { TableCell, Typography, LinearProgress, TableSortLabel, Icon } from '@material-ui/core';
+import { ArrowForward } from '@material-ui/icons';
 import { ReactNode } from 'react';
 
 const handleWeakness = (weakness?: number) => {
@@ -32,6 +32,17 @@ const handleText = (child?: string | number | ReactNode) => {
     }
     if (typeof child === 'number') return true;
     return true;
+};
+
+const handleDirection = (direction?: 'up' | 'down' | 'straight') => {
+    switch (direction) {
+        case 'up':
+            return `transform: rotate(-30deg);`;
+        case 'down':
+            return `transform: rotate(30deg);`;
+        default:
+            return ``;
+    }
 };
 
 export const Key = styled(TableCell).attrs({
@@ -99,4 +110,15 @@ export const StatBar = styled(LinearProgress)<{ stat: number }>`
 
 export const TabContent = styled.div`
     width: 100%;
+`;
+
+export const Arrow = styled(Icon)<{ direction?: 'up' | 'down' | 'straight' }>`
+    ${(props) => handleDirection(props.direction)};
+    width: 80px;
+    height: 40px;
+    text-align: center;
+`;
+
+export const ForwardArrow = styled(ArrowForward)`
+    font-size: 40px;
 `;

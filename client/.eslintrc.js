@@ -24,6 +24,7 @@ module.exports = {
     ],
     rules: {
         'no-unused-expressions': ['error', { allowShortCircuit: true, allowTernary: true }],
+        'import/prefer-default-export': 'off',
         '@typescript-eslint/no-unused-vars': ['error'],
         '@typescript-eslint/no-var-requires': 'off',
         'react/prop-types': 'off',

@@ -66,5 +66,5 @@ declare type PokemonData = {
         trMoves: Array<Move>;
         effectiveness: Array<PokemonTypeEffectiveness>;
     };
-    evolutionTree?: Array<Evolution>;
+    evolutionTree: Array<Evolution>;
 };

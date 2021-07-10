@@ -22,6 +22,7 @@
   "homepage": "https://github.com/rbeer172/PokemonWebApp#readme",
   "dependencies": {
     "@material-ui/core": "^4.11.4",
+    "@material-ui/icons": "^4.11.2",
     "@material-ui/lab": "^4.0.0-alpha.58",
     "@reduxjs/toolkit": "^1.6.0",
     "@types/lodash": "^4.14.170",

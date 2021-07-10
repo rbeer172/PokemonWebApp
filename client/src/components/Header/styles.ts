@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Button, TextField } from '@material-ui/core';
+import { Button, TextField, Grid, Typography } from '@material-ui/core';
 
 export const Divider = styled.div`
     margin-top: 300px;
@@ -35,4 +35,17 @@ export const SearchBox = styled(TextField)`
 
 export const FlexGrowDiv = styled.div`
     flex-grow: 1;
+`;
+
+export const HeaderGrid = styled(Grid).attrs({
+    container: true,
+    alignItems: 'center',
+})`
+    padding: 0px 20px 0px 20px;
+`;
+
+export const SiteName = styled(Typography).attrs({
+    variant: 'h6',
+})`
+    padding: 10px;
 `;

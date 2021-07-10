@@ -16,6 +16,7 @@ const App = () => {
             type: 'dark',
         },
     });
+    // note: adding styled-component above mui container causes strange styling behavior
     return (
         <Provider store={store}>
             <div

@@ -1,9 +1,9 @@
 import React from 'react';
-import { AppBar, Grid, Button, Typography } from '@material-ui/core';
+import { AppBar, Button } from '@material-ui/core';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import { map } from 'lodash/fp';
 import { useHistory } from 'react-router-dom';
-import { NavLink, Logo, SearchBox, FlexGrowDiv } from './styles';
+import { NavLink, Logo, SearchBox, FlexGrowDiv, HeaderGrid, SiteName } from './styles';
 import logo from '../../assets/pokeball.png';
 import loadPokemonList from '../../redux/thunks/loadPokemonList';
 import useDispatchSelector from '../../hooks/useDispatchSelector';
@@ -27,13 +27,11 @@ const Header = () => {
     return (
         <>
             <AppBar position="relative">
-                <Grid container alignItems="center" style={{ padding: '0px 20px 0px 20px' }}>
+                <HeaderGrid>
                     <FlexGrowDiv>
                         <NavLink onClick={goHome}>
                             <Logo src={logo} alt="logo" />
-                            <Typography variant="h6" style={{ padding: '10px' }}>
-                                Pokemon App
-                            </Typography>
+                            <SiteName>Pokemon App</SiteName>
                         </NavLink>
                     </FlexGrowDiv>
                     <Button color="inherit" onClick={goToPokedex}>
@@ -58,7 +56,7 @@ const Header = () => {
                             />
                         )}
                     />
-                </Grid>
+                </HeaderGrid>
             </AppBar>
         </>
     );

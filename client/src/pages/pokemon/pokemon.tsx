@@ -8,10 +8,12 @@ import EffectivenessTable from './effectivenessTable';
 import StatTable from './statTable';
 import AbilityTable from './abilityTable';
 import MoveTables from './moveTables';
+import EvolutionTree from './evolutionTree';
 
 const Pokemon = () => {
     const { name } = useParams<{ name: string }>();
     const data: PokemonData = useGetPokemon(name);
+
     return data !== undefined ? (
         <>
             <Typography align="center" variant="h3">
@@ -44,6 +46,12 @@ const Pokemon = () => {
                 </Grid>
                 <Grid container item lg={5} md={5} justify="center">
                     <EffectivenessTable data={data.pokemon} columns={6} />
+                </Grid>
+                <Grid container item xs={12} justify="center">
+                    <Typography variant="h5" align="center">
+                        Evolution Tree
+                    </Typography>
+                    <EvolutionTree data={data.evolutionTree} />
                 </Grid>
                 <Grid container item xs={12} justify="center">
                     <MoveTables data={data.pokemon} />
