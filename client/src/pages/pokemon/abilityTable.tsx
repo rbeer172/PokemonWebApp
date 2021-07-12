@@ -1,8 +1,8 @@
 import React from 'react';
-import { Table, TableBody } from '@material-ui/core';
+import { Table, TableBody, TableRow } from '@material-ui/core';
 import { map } from 'lodash/fp';
 import TableHeader from './tableHeader';
-import RowPair from './rowPair';
+import { Key, Value } from './styles';
 
 const AbilityTable = ({ data }: { data: PokemonData['pokemon'] }) => {
     return (
@@ -11,15 +11,14 @@ const AbilityTable = ({ data }: { data: PokemonData['pokemon'] }) => {
             <TableBody key="ability">
                 {map(
                     (ability) => (
-                        <RowPair
-                            key={ability.name}
-                            name={
-                                ability.hidden === true
+                        <TableRow>
+                            <Key>
+                                {ability.hidden === true
                                     ? `${ability.name} (hidden):`
-                                    : `${ability.name}:`
-                            }
-                            value={ability.description}
-                        />
+                                    : `${ability.name}:`}
+                            </Key>
+                            <Value>{ability.description}</Value>
+                        </TableRow>
                     ),
                     data.abilities
                 )}
