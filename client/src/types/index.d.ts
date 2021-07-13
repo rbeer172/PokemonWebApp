@@ -26,6 +26,13 @@ declare type Move = {
     accuracy: number | null;
 };
 
+declare type MoveProperties = {
+    categories: Array<number>;
+    powerValues: Array<number>;
+    accuracyValues: Array<number>;
+    ppValues: Array<number>;
+};
+
 declare type Evolution = {
     pokemon: string;
     evolved_pokemon: string;
