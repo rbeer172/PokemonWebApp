@@ -68,20 +68,32 @@ namespace server.Controllers
             return Ok();
         }
 
-        [HttpGet, Route("properties")]
-        public async Task<ActionResult> getMoveProperties()
+        [HttpGet, Route("properties/category")]
+        public async Task<ActionResult> getCategoryProperty()
         {
             var categoryList = await db.move_categories.ToListAsync();
+            return Ok(categoryList);
+        }
+
+        [HttpGet, Route("properties/power")]
+        public async Task<ActionResult> getPowerProperty()
+        {
             var power = await db.power_values.ToListAsync();
-            var accuracy = await db.accuracy.ToListAsync();
-            var pp = await db.pp_values.ToListAsync();
-            return Ok(new
-                { 
-                    categories = categoryList,
-                    powerValues = power, 
-                    accuracyValues = accuracy,
-                    ppValues = pp
-                });
+            return Ok(power);
+        }
+
+        [HttpGet, Route("properties/accuracy")]
+        public async Task<ActionResult> getAccuracyProperty()
+        {
+            var list = await db.accuracy.ToListAsync();
+            return Ok(list);
+        }
+
+        [HttpGet, Route("properties/pp")]
+        public async Task<ActionResult> getPPProperty()
+        {
+            var list = await db.pp_values.ToListAsync();
+            return Ok(list);
         }
 
         [HttpPost, Route("properties/category")]
