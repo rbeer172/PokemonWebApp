@@ -4,6 +4,7 @@ using System.Linq;
 using server.DataAccess;
 using server.DataAccess.entities;
 using Microsoft.EntityFrameworkCore;
+using AutoMapper;
 
 namespace server.Controllers
 {
@@ -11,17 +12,19 @@ namespace server.Controllers
     [ApiController]
     public class typesController : ControllerBase
     {
+        private readonly IMapper map;
         private readonly pokemonDataContext db;
 
-        public typesController(pokemonDataContext _db)
+        public typesController(pokemonDataContext _db, IMapper _map)
         {
             db = _db;
+            map = _map;
         }
 
         [HttpGet, Route("")]
         public async Task<ActionResult> getAllTypes()
         {
-            var result = await db.types.ToListAsync();
+            var result = await map.ProjectTo<string>(db.types).ToListAsync();
 
             return Ok(result);
         }

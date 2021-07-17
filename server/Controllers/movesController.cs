@@ -71,28 +71,28 @@ namespace server.Controllers
         [HttpGet, Route("properties/category")]
         public async Task<ActionResult> getCategoryProperty()
         {
-            var categoryList = await db.move_categories.ToListAsync();
+            var categoryList = await map.ProjectTo<string>(db.move_categories).ToListAsync();
             return Ok(categoryList);
         }
 
         [HttpGet, Route("properties/power")]
         public async Task<ActionResult> getPowerProperty()
         {
-            var power = await db.power_values.ToListAsync();
+            var power = await map.ProjectTo<int>(db.power_values).ToListAsync();
             return Ok(power);
         }
 
         [HttpGet, Route("properties/accuracy")]
         public async Task<ActionResult> getAccuracyProperty()
         {
-            var list = await db.accuracy.ToListAsync();
+            var list = await map.ProjectTo<int>(db.accuracy).ToListAsync();
             return Ok(list);
         }
 
         [HttpGet, Route("properties/pp")]
         public async Task<ActionResult> getPPProperty()
         {
-            var list = await db.pp_values.ToListAsync();
+            var list = await map.ProjectTo<int>(db.pp_values).ToListAsync();
             return Ok(list);
         }
 
