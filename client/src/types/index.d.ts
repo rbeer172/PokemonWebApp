@@ -17,13 +17,16 @@ declare type Ability = {
 
 declare type Move = {
     level?: number;
-    tm?: number;
-    tr?: number;
-    move: string;
+    tm?: number | string | null;
+    tr?: number | string | null;
+    name: string;
     type: string;
     category: string;
-    power: number | null;
-    accuracy: number | null;
+    power: number | null | string;
+    accuracy: number | null | string;
+    pp: number;
+    priority?: number;
+    description: string;
 };
 
 declare type MoveProperties = {

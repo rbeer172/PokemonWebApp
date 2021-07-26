@@ -1,11 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit';
 import pokemonList from './reducers/pokemonList';
 import pokemonData from './reducers/pokemonData';
+import moves from './reducers/moves';
 
 const store = configureStore({
     reducer: {
         pokemonList,
         pokemonData,
+        moves,
     },
 });
 

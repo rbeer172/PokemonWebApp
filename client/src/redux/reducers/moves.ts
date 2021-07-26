@@ -14,7 +14,7 @@ const slice = createSlice({
             state.push(payload);
         },
         Delete: (state, { payload }: PayloadAction<string>) => {
-            return state.filter((move) => move.move !== payload);
+            return state.filter((move) => move.name !== payload);
         },
         AddMany: (state, { payload }: PayloadAction<Data>) => {
             payload.forEach((pokemon) => {
@@ -22,13 +22,13 @@ const slice = createSlice({
             });
         },
         DeleteMany: (state, { payload }: PayloadAction<Array<string>>) => {
-            return state.filter((move) => !payload.includes(move.move));
+            return state.filter((move) => !payload.includes(move.name));
         },
         DeleteAll: (state) => {
             state = [];
         },
         Update: (state, { payload }: PayloadAction<Move>) => {
-            return state.map((move) => (payload.move === move.move ? payload : move));
+            return state.map((move) => (payload.name === move.name ? payload : move));
         },
     },
 });
