@@ -10,8 +10,8 @@ using server.DataAccess;
 namespace server.Migrations
 {
     [DbContext(typeof(pokemonDataContext))]
-    [Migration("20210713223654_moveProperties")]
-    partial class moveProperties
+    [Migration("20210723163442_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -1079,9 +1079,7 @@ namespace server.Migrations
             modelBuilder.Entity("server.DataAccess.entities.tm", b =>
                 {
                     b.Property<int>("id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
 
                     b.Property<string>("move_name")
                         .IsRequired()
@@ -1147,9 +1145,7 @@ namespace server.Migrations
             modelBuilder.Entity("server.DataAccess.entities.tr", b =>
                 {
                     b.Property<int>("id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
 
                     b.Property<string>("move_name")
                         .IsRequired()

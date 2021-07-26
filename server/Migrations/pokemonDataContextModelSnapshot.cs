@@ -1077,9 +1077,7 @@ namespace server.Migrations
             modelBuilder.Entity("server.DataAccess.entities.tm", b =>
                 {
                     b.Property<int>("id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
 
                     b.Property<string>("move_name")
                         .IsRequired()
@@ -1145,9 +1143,7 @@ namespace server.Migrations
             modelBuilder.Entity("server.DataAccess.entities.tr", b =>
                 {
                     b.Property<int>("id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
 
                     b.Property<string>("move_name")
                         .IsRequired()

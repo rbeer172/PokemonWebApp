@@ -32,40 +32,92 @@ namespace server.Controllers
         [HttpGet, Route("{name}")]
         public async Task<ActionResult> getMove(string name)
         {
-            var result = await db.pokemon_moves
-                .Where(columns => columns.name == name)
+            var result = await map.ProjectTo<move>(db.pokemon_moves
+                .Where(columns => columns.name == name))
                 .FirstOrDefaultAsync();
+               
             return Ok(result);
         }
 
         [HttpPost, Route("")]
-        public async Task<ActionResult> addMove([FromBody] moves move)
+        public async Task<ActionResult> addMove([FromBody] move Move)
         {
-            db.pokemon_moves.Add(move);
+            var entity = new moves
+            {
+                name = Move.Name,
+                typing_name = Move.Type,
+                category = Move.Category,
+                power = Move.Power,
+                accuracy = Move.Accuracy,
+                pp = Move.PP,
+                priority = Move.Priority,
+                description = Move.Description
+            };
+
+            if (Move.TM != null)
+                entity.TM = new tm { id = (int)Move.TM, move_name = Move.Name };
+
+            if (Move.TR != null)
+                entity.TR = new tr { id = (int)Move.TR, move_name = Move.Name };
+
+            db.pokemon_moves.Add(entity);
             await db.SaveChangesAsync();
 
-            return Ok();
+            return Ok(Move);
         }
 
         [HttpPost, Route("update")]
-        public async Task<ActionResult> updateMove([FromBody] moves move)
+        public async Task<ActionResult> updateMove([FromBody] move Move)
         {
-            db.pokemon_moves.Update(move);
+            var result = await map.ProjectTo<moves>(db.pokemon_moves
+                .Where(columns => columns.name == Move.Name))
+                .FirstOrDefaultAsync();
+
+            var entity = new moves
+            {
+                name = Move.Name,
+                typing_name = Move.Type,
+                category = Move.Category,
+                power = Move.Power,
+                accuracy = Move.Accuracy,
+                pp = Move.PP,
+                priority = Move.Priority,
+                description = Move.Description
+            };
+
+            if (Move.TM != null)
+            { 
+                entity.TM = new tm { id = (int)Move.TM, move_name = Move.Name }; 
+                db.TMs.Remove(result.TM); 
+            }
+
+            if (Move.TR != null)
+            { 
+                entity.TR = new tr { id = (int)Move.TR, move_name = Move.Name };
+                db.TRs.Remove(result.TR);
+            }
+
+            db.pokemon_moves.Update(entity);
             await db.SaveChangesAsync();
 
-            return Ok();
+            return Ok(Move);
         }
 
         [HttpDelete, Route("{name}")]
         public async Task<ActionResult> deleteMove(string name)
         {
-            var result = await db.pokemon_moves
-                .Where(columns => columns.name == name)
+            var result = await map.ProjectTo<moves>(db.pokemon_moves
+                .Where(columns => columns.name == name))
                 .FirstOrDefaultAsync();
+
+            if (result.TR != null)
+                db.TRs.Remove(result.TR);
+            if (result.TM != null)
+                db.TMs.Remove(result.TM);
 
             db.pokemon_moves.Remove(result);
             await db.SaveChangesAsync();
-            return Ok();
+            return Ok(name);
         }
 
         [HttpGet, Route("properties/category")]

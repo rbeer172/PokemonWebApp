@@ -89,6 +89,7 @@ namespace server.DataAccess
             CreateMap<pokemonEvolutionGroup, PokemonEvolutionGroup>();
             CreateMap<evolutionGroup, evolutionTree>();
             CreateMap<evolution, Evolution>();
+            CreateMap<moves, moves>();
         }
     }
 }

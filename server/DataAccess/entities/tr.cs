@@ -7,6 +7,7 @@ namespace server.DataAccess.entities
     public class tr
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int id { get; set; }
 
         [Required]
