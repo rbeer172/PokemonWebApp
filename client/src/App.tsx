@@ -8,7 +8,7 @@ import img from './assets/background.jpg';
 import Header from './components/Header/header';
 import Home from './pages/home';
 import Pokedex from './pages/pokedex';
-import Pokemon from './pages/pokemon';
+import Pokemon from './pages/pokemonData';
 import Moves from './pages/moves';
 
 const App = () => {

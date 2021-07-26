@@ -1,6 +1,6 @@
 import React, { ReactElement } from 'react';
 import { Grid, Typography } from '@material-ui/core';
-import { map, get, reduce } from 'lodash/fp';
+import { map, get, reduce, isUndefined } from 'lodash/fp';
 import { useAppSelector } from '../../hooks/reduxHooks';
 import PokemonCard from '../../components/pokemonCard';
 import withKey from '../../utils/withKey';
@@ -13,9 +13,9 @@ interface Node {
 }
 type Type = string | number | boolean | null;
 
-const EvolutionTree = ({ data }: { data: Array<Evolution> }) => {
+const EvolutionTree = ({ data }: { data?: Array<Evolution> }) => {
     const pokemonList = useAppSelector(get('pokemonList[Pokemon]'));
-    const tree = buildTree(data);
+    const tree = isUndefined(data) ? [] : buildTree(data);
 
     const arrowDirection = (current: Node, index: number, ListIndex: number) => {
         const list = get(ListIndex, tree);
@@ -55,7 +55,9 @@ const EvolutionTree = ({ data }: { data: Array<Evolution> }) => {
         return list;
     };
 
-    return (
+    return isUndefined(data) ? (
+        <Typography>No Evolution</Typography>
+    ) : (
         <Grid container item justify="center" direction="row" style={{ marginLeft: '-120px' }}>
             {withKey(map)(
                 (evolutionList: Array<Node>, i: number) => (
