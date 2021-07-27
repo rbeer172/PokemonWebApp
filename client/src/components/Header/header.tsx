@@ -5,7 +5,7 @@ import { map } from 'lodash/fp';
 import { useHistory } from 'react-router-dom';
 import { NavLink, Logo, SearchBox, FlexGrowDiv, HeaderGrid, SiteName } from './styles';
 import logo from '../../assets/pokeball.png';
-import loadPokemonList from '../../redux/thunks/loadPokemonList';
+import loadPokemonList from '../../redux/thunks/pokemon/loadPokemonList';
 import useDispatchSelector from '../../hooks/useDispatchSelector';
 
 // <TextField {...params} label="freeSolo" margin="normal" variant="outlined" />

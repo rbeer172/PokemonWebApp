@@ -1,6 +1,6 @@
-import { AddMany } from '../reducers/pokemonList';
-import { AppDispatch } from '../store';
-import getList from '../../api/pokemonList/getList';
+import { AddMany } from '../../reducers/pokemonList';
+import { AppDispatch } from '../../store';
+import getList from '../../../api/pokemon/getAll';
 
 const loadPokemonList = () => (dispatch: AppDispatch) =>
     getList().then((data) => {

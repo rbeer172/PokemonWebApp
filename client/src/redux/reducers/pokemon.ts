@@ -2,19 +2,19 @@
 /* eslint-disable no-param-reassign */
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-declare type Data = Array<Move>;
+declare type Data = Array<PokemonData>;
 
 const initialState: Data = [];
 
 const slice = createSlice({
-    name: 'Moves',
+    name: 'Pokemon',
     initialState,
     reducers: {
-        Add: (state, { payload }: PayloadAction<Move>) => {
+        Add: (state, { payload }: PayloadAction<PokemonData>) => {
             state.push(payload);
         },
         Delete: (state, { payload }: PayloadAction<string>) => {
-            return state.filter((move) => move.name !== payload);
+            return state.filter((data) => data.pokemon.pokemon_name !== payload);
         },
         AddMany: (state, { payload }: PayloadAction<Data>) => {
             payload.forEach((pokemon) => {
@@ -22,13 +22,15 @@ const slice = createSlice({
             });
         },
         DeleteMany: (state, { payload }: PayloadAction<Array<string>>) => {
-            return state.filter((move) => !payload.includes(move.name));
+            return state.filter((data) => !payload.includes(data.pokemon.pokemon_name));
         },
         DeleteAll: (state) => {
             state = [];
         },
-        Update: (state, { payload }: PayloadAction<Move>) => {
-            return state.map((move) => (payload.name === move.name ? payload : move));
+        Update: (state, { payload }: PayloadAction<PokemonData>) => {
+            return state.map((data) =>
+                payload.pokemon.pokemon_name === data.pokemon.pokemon_name ? payload : data
+            );
         },
     },
 });

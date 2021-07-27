@@ -5,14 +5,14 @@ import { GridColumns, DataGrid, GridColTypeDef } from '@material-ui/data-grid';
 import { Color } from '@material-ui/lab';
 import withKey from '../../utils/withKey';
 import DynamicForm from '../../components/Form/DynamicForm';
-import loadMoves from '../../redux/thunks/loadMoves';
+import loadMoves from '../../redux/thunks/moves/loadMoves';
 import useDispatchSelector from '../../hooks/useDispatchSelector';
 import ExpandCell from './expandCell';
 import formComponents from './formComponents';
 import useDispatchAction from '../../hooks/useDispatchAction';
-import createMove from '../../redux/thunks/createMove';
-import updateMove from '../../redux/thunks/updateMove';
-import deleteMove from '../../redux/thunks/deleteMove';
+import createMove from '../../redux/thunks/moves/createMove';
+import updateMove from '../../redux/thunks/moves/updateMove';
+import deleteMove from '../../redux/thunks/moves/deleteMove';
 import SnackBarAlert from './snackBarAlert';
 
 const Moves = () => {

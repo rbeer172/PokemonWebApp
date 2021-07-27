@@ -2,7 +2,7 @@
 import { get } from 'lodash/fp';
 import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from './reduxHooks';
-import loadPokemonData from '../redux/thunks/loadPokemonData';
+import loadPokemonData from '../redux/thunks/pokemon/loadPokemonData';
 
 const useGetPokemonData = (name: string | number) => {
     const dispatch = useAppDispatch();
