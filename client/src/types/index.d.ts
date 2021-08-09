@@ -20,6 +20,7 @@ declare type Move = {
     tm?: number | string | null;
     tr?: number | string | null;
     name: string;
+    move: string;
     type: string;
     category: string;
     power: number | null | string;
@@ -77,4 +78,31 @@ declare type PokemonData = {
         effectiveness: Array<PokemonTypeEffectiveness>;
     };
     evolutionTree?: Array<Evolution>;
+};
+
+declare type PokemonList = {
+    pokemon_id: number;
+    pokdex_id: number;
+    pokemon_name: string;
+    species: string;
+    height: number;
+    weight: number;
+    max_exp: number;
+    hp: number;
+    attack: number;
+    defense: number;
+    special_attack: number;
+    special_defense: number;
+    speed: number;
+    total: number;
+    description: string;
+    type: Array<string>;
+    abilities: Array<Ability> | Array<Record<string, unknown>>;
+    eggGroups: Array<string>;
+    levelUpMoves: Array<Move> | Array<Record<string, unknown>>;
+    evolutionMoves: Array<Move> | Array<string>;
+    eggMoves: Array<Move> | Array<string>;
+    tmMoves: Array<Move> | Array<string>;
+    trMoves: Array<Move> | Array<string>;
+    effectiveness?: Array<PokemonTypeEffectiveness>;
 };

@@ -6,25 +6,17 @@ import { Button } from '@material-ui/core';
 import { map } from 'lodash/fp';
 import withKey from '../../utils/withKey';
 
-type Type = string | number | boolean | null | undefined;
-
 type Fields = {
     Component: React.ComponentType | React.ElementType;
-    props?: {
-        [key: string]: unknown;
-    };
-    grid?: {
-        [key: string]: unknown;
-    };
+    props?: Record<string, unknown>;
+    grid?: Record<string, unknown>;
 };
 
-type Form = {
-    fields: { [key: string]: Fields };
-};
+type Form = Record<'fields', Record<string, Fields>>;
 
 interface Props {
     components: Form;
-    data?: { [key: string]: string | number | boolean | null };
+    data?: { [key: string]: unknown };
     onSubmit: (...args: any[]) => void;
 }
 
@@ -32,11 +24,11 @@ const DynamicForm = ({ components, data, onSubmit }: Props) => {
     const { control, handleSubmit, reset } = useForm();
 
     useEffect(() => {
-        reset(data);
+        reset({ ...data });
     }, [data, reset]);
 
     const submission = useCallback(
-        (formData: { [key: string]: Type }) => {
+        (formData: { [key: string]: unknown }) => {
             onSubmit(formData);
             reset({});
         },
@@ -51,15 +43,14 @@ const DynamicForm = ({ components, data, onSubmit }: Props) => {
                         <Controller
                             name={key}
                             key={key}
-                            defaultValue=""
+                            defaultValue={data ? data[key] : ''}
                             control={control}
                             render={(props) => (
                                 <Grid container item {...field.grid}>
                                     {field.Component ? (
                                         <field.Component
                                             label={key}
-                                            onChange={props.field.onChange}
-                                            value={props.field.value || ''}
+                                            {...props.field}
                                             {...field.props}
                                         />
                                     ) : (

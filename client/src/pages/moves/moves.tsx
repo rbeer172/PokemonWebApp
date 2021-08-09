@@ -13,7 +13,7 @@ import useDispatchAction from '../../hooks/useDispatchAction';
 import createMove from '../../redux/thunks/moves/createMove';
 import updateMove from '../../redux/thunks/moves/updateMove';
 import deleteMove from '../../redux/thunks/moves/deleteMove';
-import SnackBarAlert from './snackBarAlert';
+import SnackBarAlert from '../../components/snackBar/snackBarAlert';
 
 const Moves = () => {
     const data: Array<Move> = useDispatchSelector(loadMoves, 'moves');

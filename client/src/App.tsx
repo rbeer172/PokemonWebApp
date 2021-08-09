@@ -8,8 +8,9 @@ import img from './assets/background.jpg';
 import Header from './components/Header/header';
 import Home from './pages/home';
 import Pokedex from './pages/pokedex';
-import Pokemon from './pages/pokemonData';
+import PokemonData from './pages/pokemonData';
 import Moves from './pages/moves';
+import Pokemon from './pages/pokemon';
 
 const App = () => {
     const theme = createMuiTheme({
@@ -40,8 +41,9 @@ const App = () => {
                             <Switch>
                                 <Route exact path="/" component={Home} />
                                 <Route exact path="/pokedex" component={Pokedex} />
-                                <Route exact path="/pokedex/:name" component={Pokemon} />
+                                <Route exact path="/pokedex/:name" component={PokemonData} />
                                 <Route exact path="/moves" component={Moves} />
+                                <Route exact path="/pokemon" component={Pokemon} />
                             </Switch>
                         </Box>
                     </Container>
