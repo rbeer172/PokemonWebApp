@@ -3,6 +3,7 @@ import pokemonList from './reducers/pokemonList';
 import pokemonData from './reducers/pokemonData';
 import moves from './reducers/moves';
 import pokemon from './reducers/pokemon';
+import abilities from './reducers/abilities';
 
 const store = configureStore({
     reducer: {
@@ -10,6 +11,7 @@ const store = configureStore({
         pokemonData,
         moves,
         pokemon,
+        abilities,
     },
 });
 
