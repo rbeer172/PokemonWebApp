@@ -20,15 +20,15 @@ const SelectAbilities = ({
         <Autocomplete
             multiple={multiSelect}
             onChange={(_e, data) => props.onChange(data)}
-            value={props.value || [] || ''}
-            options={map((ability) => ability.name, abilities)}
+            value={props.value || (multiSelect ? [] : null)}
+            options={map((ability) => ability.ability_name, abilities)}
             disableCloseOnSelect
             getOptionLabel={(option: string) => option}
             renderInput={(params) => (
                 <TextField
                     {...params}
                     {...props}
-                    variant="outlined"
+                    variant="standard"
                     label={name}
                     placeholder="Move"
                 />

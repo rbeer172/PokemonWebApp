@@ -1,16 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { map, omit } from 'lodash/fp';
 import { Button, Grid } from '@material-ui/core';
 import { GridColumns, DataGrid } from '@material-ui/data-grid';
 import { Color } from '@material-ui/lab';
 import withKey from '../../utils/withKey';
 import DynamicForm from '../../components/Form/DynamicForm';
-import getAllWithMoves from '../../redux/thunks/pokemon/getAllPokemonWithMoves';
-import useDispatchSelector from '../../hooks/useDispatchSelector';
 import formComponents from './formComponents';
+import abilityForm from './abilityForm';
+import levelMovesForm from './levelMovesForm';
+import usePokemonForm from '../../hooks/usePokemonForm';
 import useDispatchAction from '../../hooks/useDispatchAction';
-import { useAppDispatch } from '../../hooks/reduxHooks';
-import loadMoves from '../../redux/thunks/moves/loadMoves';
 import createPokemon from '../../redux/thunks/pokemon/addPokemon';
 import updatePokemon from '../../redux/thunks/pokemon/updatePokemon';
 import deletePokemon from '../../redux/thunks/pokemon/deletePokemon';
@@ -27,11 +26,7 @@ type NewAbility = {
 };
 
 const Moves = () => {
-    const dispatch = useAppDispatch();
-    const data: Array<PokemonList> = useDispatchSelector(getAllWithMoves, 'pokemon');
-    useEffect(() => {
-        dispatch(loadMoves());
-    }, [dispatch]);
+    const data: Array<PokemonList> = usePokemonForm();
 
     const [Selectedmove, setSelectedmove] = useState<PokemonList | undefined>(undefined);
     const [message, setMessage] = useState('');
@@ -79,7 +74,7 @@ const Moves = () => {
                 ),
                 abilities: map(
                     (ability) => ({ ability: ability.name, hidden: ability.hidden }),
-                    obj.levelUpMoves as Array<Ability>
+                    obj.levelUpMoves as Array<PokemonAbility>
                 ),
             };
             return {
@@ -89,7 +84,7 @@ const Moves = () => {
         }, pokemonList);
 
     const submitNew = (formData: PokemonData) => {
-        console.log(formData);
+        console.log({ ...formData, abilities, levelMoves });
         // create(formData)
         //     .then(() => {
         //         setSeverity('success');
@@ -107,7 +102,7 @@ const Moves = () => {
     };
 
     const submitUpdate = (formData: PokemonData) => {
-        console.log(formData);
+        console.log({ ...formData, abilities, levelMoves });
         // update(formData)
         //     .then(() => {
         //         setSeverity('success');
@@ -136,7 +131,7 @@ const Moves = () => {
                 </Grid>
                 <Grid item xs={6}>
                     <ObjectForm
-                        form={formComponents}
+                        form={abilityForm}
                         data={abilities || []}
                         setData={setAbilities}
                         width={400}
@@ -148,12 +143,12 @@ const Moves = () => {
                 </Grid>
                 <Grid item xs={6}>
                     <ObjectForm
-                        form={formComponents}
+                        form={levelMovesForm}
                         data={levelMoves || []}
                         setData={setLevelMoves}
                         width={400}
                         columns={[
-                            { field: 'name', width: 200 },
+                            { field: 'move', width: 200 },
                             { field: 'level', width: 200 },
                         ]}
                     />
@@ -189,7 +184,7 @@ const Moves = () => {
                         color="primary"
                         onClick={
                             () => {
-                                console.log();
+                                console.log('deleted');
                             }
                             // Delete(row?.pokemon.pokdex_id)
                             //     .then(() => {

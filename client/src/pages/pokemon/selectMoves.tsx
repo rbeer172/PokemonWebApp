@@ -15,6 +15,7 @@ const SelectMoves = ({
     multiSelect: boolean;
     value: Array<string> | string;
     onChange: (value: unknown) => void;
+    style: Record<string, unknown>;
 }) => {
     const moves: Array<Move> = useAppSelector<any>(get('moves'));
 
@@ -28,14 +29,14 @@ const SelectMoves = ({
         <Autocomplete
             multiple={multiSelect}
             onChange={(_e, data) => props.onChange(data)}
-            value={props.value || [] || ''}
+            value={props.value || (multiSelect ? [] : null)}
             options={map((move) => move.name, filterMoves())}
             disableCloseOnSelect
             getOptionLabel={(option: string) => option}
             renderInput={(params) => (
                 <TextField
                     {...params}
-                    {...props}
+                    style={props.style}
                     variant="outlined"
                     label={name}
                     placeholder="Move"

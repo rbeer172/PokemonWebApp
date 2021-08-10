@@ -31,7 +31,8 @@ const ObjectForm = ({ data, setData, width, columns, form }: Props) => {
         withKey(map)((obj: Obj, id: number) => ({ id, ...obj }), list);
 
     const submitNew = (formData: Obj) => {
-        setData([...data, formData]);
+        data.push(formData);
+        setData(data);
     };
 
     return (
@@ -40,7 +41,7 @@ const ObjectForm = ({ data, setData, width, columns, form }: Props) => {
                 <Grid item xs={12}>
                     <DynamicForm components={form} onSubmit={submitNew} />
                 </Grid>
-                <Grid item style={{ height: 200, width }} xs={12}>
+                <Grid item style={{ height: 300, width }} xs={12}>
                     <DataGrid
                         disableColumnMenu
                         rowsPerPageOptions={[]}

@@ -43,14 +43,15 @@ const DynamicForm = ({ components, data, onSubmit }: Props) => {
                         <Controller
                             name={key}
                             key={key}
-                            defaultValue={data ? data[key] : ''}
+                            defaultValue=""
                             control={control}
                             render={(props) => (
                                 <Grid container item {...field.grid}>
                                     {field.Component ? (
                                         <field.Component
                                             label={key}
-                                            {...props.field}
+                                            onChange={props.field.onChange}
+                                            value={props.field.value || ''}
                                             {...field.props}
                                         />
                                     ) : (

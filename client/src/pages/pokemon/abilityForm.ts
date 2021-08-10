@@ -15,11 +15,11 @@ export default {
                 justify: 'center',
             },
         },
-        level: {
+        hidden: {
             Component: TextField,
             props: {
-                type: 'number',
-                style: { width: 50 },
+                type: 'checkbox',
+                style: { width: 200 },
             },
             grid: {
                 xs: 6,

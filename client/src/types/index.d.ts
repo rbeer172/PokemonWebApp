@@ -9,9 +9,14 @@ declare type PokemonTypeEffectiveness = {
     multiplier: number;
 };
 
-declare type Ability = {
+declare type PokemonAbility = {
     name: string;
     hidden: boolean;
+    description: string;
+};
+
+declare type Ability = {
+    ability_name: string;
     description: string;
 };
 
@@ -68,7 +73,7 @@ declare type PokemonData = {
         total: number;
         description: string;
         type: Array<string>;
-        abilities: Array<Ability>;
+        abilities: Array<PokemonAbility>;
         eggGroups: Array<string>;
         levelUpMoves: Array<Move>;
         evolutionMoves: Array<Move>;
@@ -97,7 +102,7 @@ declare type PokemonList = {
     total: number;
     description: string;
     type: Array<string>;
-    abilities: Array<Ability> | Array<Record<string, unknown>>;
+    abilities: Array<PokemonAbility> | Array<Record<string, unknown>>;
     eggGroups: Array<string>;
     levelUpMoves: Array<Move> | Array<Record<string, unknown>>;
     evolutionMoves: Array<Move> | Array<string>;
