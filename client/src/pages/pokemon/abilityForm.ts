@@ -1,12 +1,14 @@
 import { TextField } from '@material-ui/core';
-import SelectAbilities from './selectAbilities';
+import selectObject from './selectObject';
 
 export default {
     fields: {
         ability: {
-            Component: SelectAbilities,
+            Component: selectObject,
             props: {
-                name: 'ability',
+                label: 'Ability',
+                reduxSelector: 'abilities',
+                optionList: (ability: Ability) => ability.ability_name,
                 multiSelect: false,
                 style: { width: 250 },
             },

@@ -1,5 +1,6 @@
 import { TextField } from '@material-ui/core';
 import SelectMoves from './selectMoves';
+import SelectType from './selectType';
 
 export default {
     fields: {
@@ -10,7 +11,7 @@ export default {
                 style: { width: '150px' },
             },
             grid: {
-                xs: 2,
+                xs: 1,
                 justify: 'center',
             },
         },
@@ -22,6 +23,18 @@ export default {
             },
             grid: {
                 xs: 2,
+                justify: 'center',
+            },
+        },
+        type: {
+            Component: SelectType,
+            props: {
+                name: 'type',
+                multiSelect: true,
+                style: { width: '350px' },
+            },
+            grid: {
+                xs: 4,
                 justify: 'center',
             },
         },
@@ -43,7 +56,7 @@ export default {
                 style: { width: '150px' },
             },
             grid: {
-                xs: 2,
+                xs: 1,
                 justify: 'center',
             },
         },
@@ -54,7 +67,7 @@ export default {
                 style: { width: '150px' },
             },
             grid: {
-                xs: 2,
+                xs: 1,
                 justify: 'center',
             },
         },
@@ -65,7 +78,7 @@ export default {
                 style: { width: '150px' },
             },
             grid: {
-                xs: 2,
+                xs: 1,
                 justify: 'center',
             },
         },

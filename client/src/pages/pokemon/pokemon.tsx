@@ -74,7 +74,7 @@ const Moves = () => {
                 ),
                 abilities: map(
                     (ability) => ({ ability: ability.name, hidden: ability.hidden }),
-                    obj.levelUpMoves as Array<PokemonAbility>
+                    obj.abilities as Array<PokemonAbility>
                 ),
             };
             return {
@@ -103,6 +103,8 @@ const Moves = () => {
 
     const submitUpdate = (formData: PokemonData) => {
         console.log({ ...formData, abilities, levelMoves });
+        setAbilities(undefined);
+        setLevelMoves(undefined);
         // update(formData)
         //     .then(() => {
         //         setSeverity('success');
@@ -121,7 +123,7 @@ const Moves = () => {
     return (
         <>
             <SnackBarAlert open={open} setOpen={setOpen} severity={severity} message={message} />
-            <Grid container spacing={2} direction="row">
+            <Grid container spacing={4} direction="row">
                 <Grid item xs={12}>
                     <DynamicForm
                         data={Selectedmove}
@@ -134,7 +136,7 @@ const Moves = () => {
                         form={abilityForm}
                         data={abilities || []}
                         setData={setAbilities}
-                        width={400}
+                        name="Abilities"
                         columns={[
                             { field: 'ability', width: 200 },
                             { field: 'hidden', width: 200 },
@@ -146,7 +148,7 @@ const Moves = () => {
                         form={levelMovesForm}
                         data={levelMoves || []}
                         setData={setLevelMoves}
-                        width={400}
+                        name="Level Up Moves"
                         columns={[
                             { field: 'move', width: 200 },
                             { field: 'level', width: 200 },
@@ -173,7 +175,11 @@ const Moves = () => {
                         type="submit"
                         variant="contained"
                         color="primary"
-                        onClick={() => setSelectedmove(row)}>
+                        onClick={() => {
+                            setSelectedmove(row);
+                            setAbilities(row?.abilities as Array<NewAbility>);
+                            setLevelMoves(row?.levelUpMoves as Array<LevelMove>);
+                        }}>
                         Update
                     </Button>
                 </Grid>

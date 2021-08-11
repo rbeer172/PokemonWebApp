@@ -8,10 +8,10 @@ export default {
             props: {
                 name: 'move',
                 multiSelect: false,
-                style: { width: 250 },
+                style: { width: 300 },
             },
             grid: {
-                xs: 6,
+                xs: 8,
                 justify: 'center',
             },
         },
@@ -19,10 +19,10 @@ export default {
             Component: TextField,
             props: {
                 type: 'number',
-                style: { width: 50 },
+                style: { width: 120 },
             },
             grid: {
-                xs: 6,
+                xs: 4,
                 justify: 'center',
             },
         },
